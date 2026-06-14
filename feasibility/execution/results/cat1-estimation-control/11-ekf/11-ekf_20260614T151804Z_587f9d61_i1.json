@@ -1,0 +1,57 @@
+{
+  "schema": "avrxpu-run/1",
+  "run_id": "11-ekf_20260614T151804Z_587f9d61_i1",
+  "workload": {
+    "id": "11-ekf",
+    "category": "cat1-estimation-control",
+    "kernel": "EKF covariance predict (states 0..12), 24x24 fp32"
+  },
+  "kind": "measurement",
+  "created_utc": "2026-06-14T15:18:04Z",
+  "platform": {
+    "runner": "navrobotec",
+    "gem5_git": "587f9d61b9",
+    "gem5_dirty": false
+  },
+  "build": {
+    "mcu": "atmega1284p",
+    "toolchain": "avr-gcc 7.3.0",
+    "cflags": "-O1 -ffp-contract=off -fno-fast-math",
+    "iters": 1,
+    "trace": false,
+    "elf": "ekf_avr.elf",
+    "elf_sha256": "501853baf36a48dd66cb841e51362c114f59d0da158bf4ae0877e3e3d38b46cd"
+  },
+  "validation": {
+    "host_crc": "26175af3",
+    "gem5_crc": "26175af3",
+    "checkpoints": 91,
+    "match": true
+  },
+  "exit": {
+    "cause": "AVR Syscall Exit",
+    "ok": true
+  },
+  "metrics": {
+    "simInsts": 800482,
+    "simOps": 800482,
+    "numCycles": 1022029,
+    "cpi": 1.276767,
+    "ipc": 0.783228,
+    "numMemRefs": 0,
+    "numFpInsts": 0,
+    "numIntInsts": 528572,
+    "numLoadInsts": 0,
+    "numStoreInsts": 0
+  },
+  "opmix": {
+    "available": false,
+    "note": "AVR CPU does not tag OpClass (committedInstType all 0; load/store/mem counters 0) \u2014 needs gem5 instrumentation (F2).",
+    "classes": {}
+  },
+  "raw": {
+    "stats": "11-ekf_20260614T151804Z_587f9d61_i1.stats.txt",
+    "trace_cmp": "OK 91/91 CRC 26175af3"
+  },
+  "notes": ""
+}

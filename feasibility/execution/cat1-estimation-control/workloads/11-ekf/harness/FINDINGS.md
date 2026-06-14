@@ -30,3 +30,16 @@ reference **bit-for-bit (91/91 checkpoints, CRC 26175af3)** — first fully-vali
 - **B (sidestep):** target a ≤64 KB-flash avr5 part (crt uses LPM, no ELPM) — but those cap at 4 KB
   SRAM (`atmega644p`), so also shrink the arrays to 16×16 (≈2 KB, still exercises states 0..15).
   Gets a running gem5 result now; defers ELPM.
+
+---
+
+## F2 — AVR CPU emits no usable op-mix (2026-06-14)  [OPEN]
+
+- **Symptom:** in `stats.txt`, the OpClass histogram `committedInstType::*` is **all zero**, and
+  `numLoadInsts` / `numStoreInsts` / `numMemRefs` / `numFpInsts` are **0**, despite ~800 K instructions
+  committed. So gem5 gives `simInsts`/`numCycles`/`cpi` but **not "what they use most."**
+- **Cause:** AVR static insts aren't tagged with an `OpClass`, and the CPU doesn't count loads/stores.
+- **Fix (proposed):** instrument the AVR CPU with a **per-opcode (per-mnemonic) histogram** — more
+  useful here than OpClass, since on 8-bit AVR all softfloat is integer ops (OpClass would lump it all
+  as IntAlu). Emit as gem5 stats so `record_run.py` captures it into `opmix.classes` (the schema
+  already reserves the field). **Prerequisite for the measurement phase.**
