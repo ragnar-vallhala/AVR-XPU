@@ -156,11 +156,12 @@ workload & sim.\ insts & cycles & CPI & comp.\ insts/byte \\
 \begin{axis}[
   xbar, xmode=log, width=12.5cm, height=7.6cm,
   xlabel={instructions retired per run ($N{=}1$, log scale)},
-  xmin=5000, xmax=1500000,
+  xmin=5000, xmax=3000000,
   bar width=7pt, enlarge y limits=0.06,
   symbolic y coords={15-control-allocation,14-control-pid,13-quaternion,12-ahrs,25-dotprod,32-fc,24-matmul,21-fir,22-biquad,31-conv2d,23-fft,33-maxpool,11-ekf},
   ytick=data, y tick label style={font=\footnotesize}, tick align=outside,
-  nodes near coords, nodes near coords style={font=\scriptsize}, point meta=explicit symbolic,
+  nodes near coords, nodes near coords align={horizontal},
+  nodes near coords style={font=\scriptsize, anchor=west}, point meta=explicit symbolic,
 ]
 \addplot[fill=cArm,draw=cArm] coordinates {
  (9429,15-control-allocation)[9.4k] (12965,14-control-pid)[13k] (16185,13-quaternion)[16k]
@@ -204,11 +205,12 @@ function & cost (cycles) & calls & cycles/call \\
 \begin{axis}[
   xbar, width=12.5cm, height=5.6cm,
   xlabel={runtime cost (cycles) $=$ calls $\times$ cycles/call},
-  xmin=0, xmax=270000, bar width=10pt, enlarge y limits=0.12,
+  xmin=0, xmax=300000, bar width=10pt, enlarge y limits=0.12,
   ytick={0,1,2,3,4,5},
   yticklabels={\texttt{\_\_udivmodhi4},\texttt{\_\_floatsisf},\texttt{\_\_addsf3},\texttt{\_\_mulsf3},\texttt{main},\texttt{\_\_divsf3}},
   y tick label style={font=\footnotesize}, tick align=outside,
-  nodes near coords, nodes near coords style={font=\scriptsize},
+  nodes near coords, nodes near coords align={horizontal},
+  nodes near coords style={font=\scriptsize, anchor=west},
 ]
 \addplot[fill=cRv,draw=cRv] coordinates {(53888,0)(65111,1)(98802,2)(112826,3)(147140,4)(233106,5)};
 \end{axis}
@@ -308,6 +310,85 @@ workload & kind & ops & bytes & cyc/op & $I$ (op/B) & helper\% & ridge\,$W$ & sp
 \emph{Caveat:} \texttt{bytes} is the load/store count; for the big-expression EKF some are register spills,
 so per-kernel intensity is approximate, but the order-of-magnitude ($I\ll$ ridge) result is robust across
 all kernels. \code{33-maxpool} is excluded (no MAC---pure int8 compares).
+
+\subsection{Where the FPU architectures sit: a measured cross-architecture roofline}\label{sec:xarch}
+The roofline above is AVR-only. To see how much of the gap is the \emph{missing FPU} versus the
+\emph{ISA encoding}, the same fp kernels were measured on ARM64 and RISC-V (\S3's runs) and placed on the
+\emph{same} roofline (Figure~\ref{fig:xroof}, Table~\ref{tab:xarch}). Two quantities are taken
+per-invocation (i11$-$i1) for each ISA: \textbf{achieved throughput} (fp-ops/cycle) and \textbf{arithmetic
+intensity} (fp-ops per data-byte). To keep the byte axis architecture-neutral, \texttt{bytes} here is the
+gem5 \emph{memory-controller} data traffic (\code{bytesRead/Written::cpu.data}, total data memory incl.\
+stack spills) for all three ISAs; fp-ops are softfloat calls on AVR and committed float-class instructions
+on ARM/RISC-V.
+
+\begin{figure}[ht]\centering
+\begin{tikzpicture}
+\begin{axis}[
+  xmode=log, ymode=log, width=12.5cm, height=7.6cm,
+  xlabel={arithmetic intensity (fp-ops / data-byte moved)},
+  ylabel={achieved fp-ops / cycle},
+  xmin=0.03, xmax=2, ymin=0.004, ymax=2,
+  legend pos=north west, legend cell align=left, legend style={font=\footnotesize},
+  grid=both, major grid style={line width=.2pt,draw=gray!25}, minor tick num=1,
+]
+\addplot[gray,dashed,domain=0.03:2,samples=2]{1}; \addlegendentry{scalar FP roof (1 op/cycle)}
+\addplot[only marks,mark=*,mark size=2.2pt,cBase] coordinates {
+ (0.070,0.0081)(0.062,0.0076)(0.061,0.0077)(0.065,0.0090)(0.058,0.0073)
+ (0.062,0.0096)(0.053,0.0081)(0.054,0.0091)(0.043,0.0064)(0.040,0.0058)};
+\addlegendentry{AVR softfloat}
+\addplot[only marks,mark=square*,mark size=2pt,cArm] coordinates {
+ (1.039,0.6985)(0.251,0.2824)(0.235,0.2223)(0.287,0.4703)(0.280,0.1808)
+ (0.327,0.4552)(0.175,0.3185)(0.207,0.2310)(0.108,0.2156)(0.312,0.2307)};
+\addlegendentry{ARM64 (NEON+VFP)}
+\addplot[only marks,mark=triangle*,mark size=2.6pt,cRv] coordinates {
+ (0.641,0.5424)(0.250,0.1652)(0.235,0.1929)(0.288,0.5322)(0.280,0.1341)
+ (0.320,0.3201)(0.175,0.1770)(0.202,0.1781)(0.185,0.1249)(0.380,0.2036)};
+\addlegendentry{RISC-V (RV64GC)}
+\end{axis}
+\end{tikzpicture}
+\caption{The same ten fp kernels on three ISAs. AVR (grey) clusters at the bottom-left
+($\sim$0.006--0.010 fp-ops/cycle); the FPU cores (blue/orange) sit two orders of magnitude higher, near
+the scalar FP roof, \emph{and} further right (higher intensity)---softfloat both lacks hardware fp
+\emph{and} moves $\sim$5$\times$ more bytes per op.}\label{fig:xroof}
+\end{figure}
+
+\begin{table}[ht]\centering\small
+\caption{Cross-architecture arithmetic analysis (per invocation, i11$-$i1).
+$I$ $=$ fp-ops/data-byte (intensity); \emph{tput} $=$ achieved fp-ops/cycle.}\label{tab:xarch}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+& \multicolumn{2}{c}{AVR softfloat} & \multicolumn{2}{c}{ARM64} & \multicolumn{2}{c}{RISC-V} & ARM/AVR \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+workload & $I$ & tput & $I$ & tput & $I$ & tput & tput \\
+\midrule
+12-ahrs & 0.070 & 0.0081 & 1.039 & 0.699 & 0.641 & 0.542 & 86.5$\times$ \\
+25-dotprod & 0.062 & 0.0076 & 0.251 & 0.282 & 0.250 & 0.165 & 37.0$\times$ \\
+24-matmul & 0.061 & 0.0077 & 0.235 & 0.222 & 0.235 & 0.193 & 29.1$\times$ \\
+11-ekf & 0.065 & 0.0090 & 0.287 & 0.470 & 0.288 & 0.532 & 52.0$\times$ \\
+21-fir & 0.058 & 0.0073 & 0.280 & 0.181 & 0.280 & 0.134 & 24.9$\times$ \\
+13-quaternion & 0.062 & 0.0096 & 0.327 & 0.455 & 0.320 & 0.320 & 47.3$\times$ \\
+22-biquad & 0.053 & 0.0081 & 0.175 & 0.319 & 0.175 & 0.177 & 39.2$\times$ \\
+23-fft & 0.054 & 0.0091 & 0.207 & 0.231 & 0.202 & 0.178 & 25.4$\times$ \\
+15-control-alloc & 0.043 & 0.0064 & 0.108 & 0.216 & 0.185 & 0.125 & 33.9$\times$ \\
+14-control-pid & 0.040 & 0.0058 & 0.312 & 0.231 & 0.380 & 0.204 & 40.0$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{What this adds to the verdict.}
+\begin{itemize}
+  \item \textbf{Throughput.} The FPU cores reach \textbf{0.13--0.70 fp-ops/cycle} (within a small factor of
+  the scalar FP roof of 1), versus AVR softfloat's \textbf{0.006--0.010}---a \textbf{25--86$\times$} gap
+  that tracks the \S3 instruction-count gap. This confirms the deficit is the \emph{absent hardware FPU},
+  not the AVR instruction encoding, and bounds what a hardware fp datapath can recover.
+  \item \textbf{Intensity.} AVR's measured intensity (0.04--0.07 fp/byte) is \textbf{$\sim$3--15$\times$
+  lower} than ARM's (0.11--1.04): softfloat spills $\sim$5$\times$ more bytes per fp op, pushing AVR
+  \emph{deeper} into the memory-bound region. So even after adding hardware fp, AVR-XPU must pair the MAC
+  datapath with enough memory bandwidth to feed it---reinforcing the \S2 design implication.
+  \item \emph{Caveat:} where gcc auto-vectorized for NEON (notably \code{21-fir}), one ARM instruction
+  packs several fp ops, so ARM's fp-op count---and thus its intensity/throughput---is slightly
+  \emph{under}-stated for those kernels.
+\end{itemize}
 
 \section{(\S3) Baseline Comparison: ARM and RISC-V with hardware FP}
 
