@@ -33,7 +33,14 @@ reference **bit-for-bit (91/91 checkpoints, CRC 26175af3)** — first fully-vali
 
 ---
 
-## F2 — AVR CPU emits no usable op-mix (2026-06-14)  [OPEN]
+## F2 — AVR CPU emits no usable op-mix (2026-06-14)  [RESOLVED 2026-06-14]
+
+**Resolution:** the AVR CPU now counts every committed instruction by mnemonic (`opHist[inst->getName()]`)
+and writes the sorted histogram to `<outdir>/avr_opmix.txt` at exit (gem5 fork btp `c560d40515`).
+`record_run.py` ingests it into `opmix.classes`. First EKF op-mix: `adc 142234, cpc 68584, brbs 65976,
+brbc 59117, add 57168, ...` (53 mnemonics, total = simInsts 800482) — fp32 softfloat on the FPU-less core.
+
+### Original report  [was OPEN]
 
 - **Symptom:** in `stats.txt`, the OpClass histogram `committedInstType::*` is **all zero**, and
   `numLoadInsts` / `numStoreInsts` / `numMemRefs` / `numFpInsts` are **0**, despite ~800 K instructions
