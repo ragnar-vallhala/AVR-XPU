@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="736" height="472" font-family="monospace" font-size="12">
+<rect width="736" height="472" fill="white"/>
+<text x="10" y="22" font-size="15" font-weight="bold">11-ekf op-mix (insts) — cat1-11-ekf-i1-501853ba-1781453273</text>
+<text x="10" y="42" font-size="11" fill="#555">total 800482 across 53 entries; top 20 = 87.3%</text>
+<text x="90" y="71" text-anchor="end">adc</text>
+<rect x="96" y="61" width="470" height="13" fill="#4677c8"/>
+<text x="571" y="71">142234  17.8%</text>
+<text x="90" y="91" text-anchor="end">cpc</text>
+<rect x="96" y="81" width="227" height="13" fill="#4677c8"/>
+<text x="328" y="91">68584  8.6%</text>
+<text x="90" y="111" text-anchor="end">brbs</text>
+<rect x="96" y="101" width="218" height="13" fill="#4677c8"/>
+<text x="319" y="111">65976  8.2%</text>
+<text x="90" y="131" text-anchor="end">brbc</text>
+<rect x="96" y="121" width="195" height="13" fill="#4677c8"/>
+<text x="296" y="131">59117  7.4%</text>
+<text x="90" y="151" text-anchor="end">add</text>
+<rect x="96" y="141" width="189" height="13" fill="#4677c8"/>
+<text x="290" y="151">57168  7.1%</text>
+<text x="90" y="171" text-anchor="end">eor</text>
+<rect x="96" y="161" width="122" height="13" fill="#4677c8"/>
+<text x="223" y="171">37066  4.6%</text>
+<text x="90" y="191" text-anchor="end">ror_inst</text>
+<rect x="96" y="181" width="115" height="13" fill="#4677c8"/>
+<text x="216" y="191">34764  4.3%</text>
+<text x="90" y="211" text-anchor="end">cp</text>
+<rect x="96" y="201" width="93" height="13" fill="#4677c8"/>
+<text x="194" y="211">28218  3.5%</text>
+<text x="90" y="231" text-anchor="end">sbc</text>
+<rect x="96" y="221" width="88" height="13" fill="#4677c8"/>
+<text x="189" y="231">26613  3.3%</text>
+<text x="90" y="251" text-anchor="end">movw</text>
+<rect x="96" y="241" width="86" height="13" fill="#4677c8"/>
+<text x="187" y="251">26143  3.3%</text>
+<text x="90" y="271" text-anchor="end">sbci</text>
+<rect x="96" y="261" width="74" height="13" fill="#4677c8"/>
+<text x="175" y="271">22450  2.8%</text>
+<text x="90" y="291" text-anchor="end">cpi</text>
+<rect x="96" y="281" width="56" height="13" fill="#4677c8"/>
+<text x="157" y="291">16797  2.1%</text>
+<text x="90" y="311" text-anchor="end">mov</text>
+<rect x="96" y="301" width="53" height="13" fill="#4677c8"/>
+<text x="154" y="311">15951  2.0%</text>
+<text x="90" y="331" text-anchor="end">dec</text>
+<rect x="96" y="321" width="51" height="13" fill="#4677c8"/>
+<text x="152" y="331">15393  1.9%</text>
+<text x="90" y="351" text-anchor="end">ret</text>
+<rect x="96" y="341" width="51" height="13" fill="#4677c8"/>
+<text x="152" y="351">15391  1.9%</text>
+<text x="90" y="371" text-anchor="end">andi</text>
+<rect x="96" y="361" width="48" height="13" fill="#4677c8"/>
+<text x="149" y="371">14568  1.8%</text>
+<text x="90" y="391" text-anchor="end">call</text>
+<rect x="96" y="381" width="45" height="13" fill="#4677c8"/>
+<text x="146" y="391">13736  1.7%</text>
+<text x="90" y="411" text-anchor="end">mul</text>
+<rect x="96" y="401" width="44" height="13" fill="#4677c8"/>
+<text x="145" y="411">13427  1.7%</text>
+<text x="90" y="431" text-anchor="end">ldi</text>
+<rect x="96" y="421" width="42" height="13" fill="#4677c8"/>
+<text x="143" y="431">12774  1.6%</text>
+<text x="90" y="451" text-anchor="end">com</text>
+<rect x="96" y="441" width="41" height="13" fill="#4677c8"/>
+<text x="142" y="451">12376  1.5%</text>
+</svg>

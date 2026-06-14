@@ -1,5 +1,5 @@
-# AVR per-mnemonic execution histogram (op-mix)
-# columns: mnemonic count
+# AVR per-mnemonic instruction histogram (op-mix)
+# columns: name count
 adc 142234
 cpc 68584
 brbs 65976

@@ -12,15 +12,24 @@ results/
   <category>/<workload>/
     <run_id>.json                   # structured record (schema avrxpu-run/1)
     <run_id>.stats.txt              # raw gem5 stats.txt (retained verbatim)
-    <run_id>.opmix.txt              # raw per-mnemonic op-mix (avr_opmix.txt)
-    <run_id>.svg                    # op-mix histogram (top 20)
+    <run_id>.opmix.txt   .opmix.svg     # per-mnemonic INSTRUCTION op-mix + histogram
+    <run_id>.cycles.txt  .cycles.svg    # per-mnemonic CYCLE op-mix (where cycles go) + histogram
+    <run_id>.funcmix.txt .funcmix.svg   # per-FUNCTION op-mix (PC symbol; e.g. __divsf3) + histogram
     elf/<elfsha12>.elf              # the ELF — kept ONLY for runs that worked, content-addressed by sha
 ```
 
-`run_id = <catShort>-<workload>-<elfsha8>-<unixtime>` (e.g. `cat1-11-ekf-501853ba-1781451428`) — every
-per-run artifact is prefixed with it. **`runs.csv`** is the cross-run master index; columns: run_id,
-created_utc, category, workload, kind, valid, simInsts, numCycles, cpi, elf_archived, elf_sha256,
-record_json, stats_file, opmix_file, svg_file, note (<100 chars).
+`run_id = <catShort>-<workload>-i<iters>-<elfsha8>-<unixtime>` (e.g. `cat1-11-ekf-i1-501853ba-1781451428`)
+— every per-run artifact is prefixed with it. **`runs.csv`** is the cross-run master index; columns:
+run_id, created_utc, category, workload, kind, iters, valid, simInsts, numCycles, cpi, **arith_ipb**
+(compute insts per byte moved), elf_archived, elf_sha256, record_json, stats_file, opmix_file,
+opmix_svg, cycles_file, funcmix_file, note (<100 chars).
+
+### Data axes per run
+- **op-mix** (`opmix`) — what instructions run most.
+- **cycle-weighted op-mix** (`opmix_cycles`) — where the *cycles* go (count × per-op cycle cost).
+- **function-mix** (`funcmix`) — which functions/symbols dominate (e.g. softfloat `__divsf3`).
+- **arithmetic intensity** (`metrics.mem_insts / bytes_moved / compute_insts / insts_per_byte`) —
+  data-memory traffic derived from the op-mix; the roofline / memory-bound input.
 
 ## Record schema — `avrxpu-run/1`
 
