@@ -29,7 +29,7 @@ METRIC_KEYS = {
 CSV_FIELDS = ["run_id", "created_utc", "category", "workload", "kind", "iters", "valid",
               "simInsts", "numCycles", "cpi", "arith_ipb", "elf_archived", "elf_sha256",
               "record_json", "stats_file", "opmix_file", "opmix_svg",
-              "cycles_file", "funcmix_file", "funccyc_file", "note"]
+              "cycles_file", "funcmix_file", "funccyc_file", "funccalls_file", "note"]
 
 # AVR mnemonics that move a byte to/from memory (data, stack, or program memory).
 # Excludes ldi (load-immediate), mov/movw (reg-reg) and in/out (peripheral I/O).
@@ -143,6 +143,7 @@ def main(argv):
     cycmix = parse_hist(os.path.join(m5, "avr_opmix_cycles.txt"))
     funcmix = parse_hist(os.path.join(m5, "avr_funcmix.txt"))
     funccyc = parse_hist(os.path.join(m5, "avr_funccyc.txt"))
+    funccalls = parse_hist(os.path.join(m5, "avr_funccalls.txt"))
 
     # #1 arithmetic intensity: memory traffic derived from the op-mix.
     total_i = sum(opmix.values()) if opmix else (metrics.get("simInsts") or 0)
@@ -183,6 +184,7 @@ def main(argv):
     cyc_txt, cyc_svg = save(cycmix, "avr_opmix_cycles.txt", ".cycles", "op-mix (cycles)")
     func_txt, func_svg = save(funcmix, "avr_funcmix.txt", ".funcmix", "function-mix (insts)")
     funccyc_txt, funccyc_svg = save(funccyc, "avr_funccyc.txt", ".funccyc", "function-mix (cycles)")
+    fcall_txt, fcall_svg = save(funccalls, "avr_funccalls.txt", ".funccalls", "function calls (count)")
 
     elf_archived = None
     if valid and a.elf and elf_sha and not a.no_store_elf:
@@ -210,10 +212,11 @@ def main(argv):
         "metrics": metrics,
         "opmix": section(opmix), "opmix_cycles": section(cycmix),
         "funcmix": section(funcmix), "funcmix_cycles": section(funccyc),
+        "funccalls": section(funccalls),
         "raw": {"stats": stats_file, "opmix": opmix_txt, "opmix_svg": opmix_svg,
                 "cycles": cyc_txt, "cycles_svg": cyc_svg, "funcmix": func_txt,
                 "funcmix_svg": func_svg, "funccyc": funccyc_txt, "funccyc_svg": funccyc_svg,
-                "trace_cmp": a.trace_cmp},
+                "funccalls": fcall_txt, "funccalls_svg": fcall_svg, "trace_cmp": a.trace_cmp},
         "note": note,
     }
     record_json = run_id + ".json"
@@ -235,7 +238,8 @@ def main(argv):
                     "cpi": metrics.get("cpi"), "arith_ipb": ipb, "elf_archived": elf_archived,
                     "elf_sha256": elf_sha, "record_json": j(record_json), "stats_file": j(stats_file),
                     "opmix_file": j(opmix_txt), "opmix_svg": j(opmix_svg), "cycles_file": j(cyc_txt),
-                    "funcmix_file": j(func_txt), "funccyc_file": j(funccyc_txt), "note": note})
+                    "funcmix_file": j(func_txt), "funccyc_file": j(funccyc_txt),
+                    "funccalls_file": j(fcall_txt), "note": note})
 
     print(f"recorded {run_id}  valid={valid}  simInsts={metrics.get('simInsts')}  "
           f"mem={mem_i} ipb={ipb}  opmix/cyc/func={'Y' if opmix else 'N'}"
