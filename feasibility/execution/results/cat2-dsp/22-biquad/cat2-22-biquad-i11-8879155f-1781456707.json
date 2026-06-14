@@ -1,0 +1,409 @@
+{
+  "schema": "avrxpu-run/1",
+  "run_id": "cat2-22-biquad-i11-8879155f-1781456707",
+  "workload": {
+    "id": "22-biquad",
+    "category": "cat2-dsp",
+    "kernel": "fp32 biquad IIR cascade DF1 (4 sections)"
+  },
+  "kind": "measurement",
+  "created_utc": "2026-06-14T17:05:07Z",
+  "unixtime": 1781456707,
+  "platform": {
+    "runner": "navrobotec",
+    "gem5_git": "adac491a9e"
+  },
+  "build": {
+    "mcu": "atmega1284p",
+    "toolchain": "avr-gcc 7.3.0",
+    "cflags": "-O1 -ffp-contract=off -fno-fast-math",
+    "iters": 11,
+    "trace": false,
+    "elf": "biquad_avr_i11.elf",
+    "elf_sha256": "8879155f29483e2417801565189731494ae1af4defd3c3d4a0cf0b1582ff1e8c",
+    "elf_archived": "cat2-dsp/22-biquad/elf/8879155f2948.elf"
+  },
+  "validation": {
+    "host_crc": "399600fc",
+    "gem5_crc": "399600fc",
+    "checkpoints": 0,
+    "match": true
+  },
+  "exit": {
+    "cause": "AVR Syscall Exit",
+    "ok": true
+  },
+  "metrics": {
+    "simInsts": 2076267,
+    "simOps": 2076267,
+    "numCycles": 2953342,
+    "cpi": 1.422429,
+    "ipc": 0.703023,
+    "mem_insts": 213285,
+    "bytes_moved": 213285,
+    "compute_insts": 1862982,
+    "insts_per_byte": 8.735
+  },
+  "opmix": {
+    "available": true,
+    "total": 2076267,
+    "classes": {
+      "adc": 257187,
+      "add": 214754,
+      "brbs": 191504,
+      "ror_inst": 141805,
+      "brbc": 108633,
+      "mul": 104637,
+      "eor": 92711,
+      "mov": 83402,
+      "movw": 68613,
+      "sbci": 63011,
+      "cpi": 60239,
+      "call": 59014,
+      "ret": 59013,
+      "ldd_y": 53972,
+      "cpc": 51234,
+      "std_y": 46504,
+      "inc": 42543,
+      "ldd_z": 42248,
+      "subi": 40504,
+      "lsr": 31075,
+      "ld_x_postinc": 27489,
+      "st_x_postinc": 25924,
+      "or": 19929,
+      "jmp": 19840,
+      "sbrc": 19732,
+      "bst": 19725,
+      "cp": 15939,
+      "ldi": 15283,
+      "sbiw": 14793,
+      "and": 14614,
+      "adiw": 12678,
+      "sbc": 11591,
+      "bld": 10717,
+      "sub": 9019,
+      "ld_x": 8459,
+      "st_x": 8456,
+      "rjmp": 4848,
+      "sbrs": 1919,
+      "dec": 1399,
+      "com": 781,
+      "andi": 168,
+      "std_z": 156,
+      "neg": 55,
+      "bclr": 50,
+      "elpm_z_postinc": 28,
+      "pop": 18,
+      "push": 18,
+      "ld_z_postinc": 13,
+      "out_instr": 10,
+      "cpse": 9,
+      "in_instr": 4
+    }
+  },
+  "opmix_cycles": {
+    "available": true,
+    "total": 2953323,
+    "classes": {
+      "adc": 257187,
+      "call": 236056,
+      "ret": 236052,
+      "brbs": 231057,
+      "add": 214754,
+      "mul": 209274,
+      "brbc": 190739,
+      "ror_inst": 141805,
+      "ldd_y": 107944,
+      "std_y": 93008,
+      "eor": 92711,
+      "ldd_z": 84496,
+      "mov": 83402,
+      "movw": 68613,
+      "sbci": 63011,
+      "cpi": 60239,
+      "jmp": 59520,
+      "ld_x_postinc": 54978,
+      "st_x_postinc": 51848,
+      "cpc": 51234,
+      "inc": 42543,
+      "subi": 40504,
+      "lsr": 31075,
+      "sbrc": 30149,
+      "sbiw": 29586,
+      "adiw": 25356,
+      "or": 19929,
+      "bst": 19725,
+      "ld_x": 16918,
+      "st_x": 16912,
+      "cp": 15939,
+      "ldi": 15283,
+      "and": 14614,
+      "sbc": 11591,
+      "bld": 10717,
+      "rjmp": 9696,
+      "sub": 9019,
+      "sbrs": 2923,
+      "dec": 1399,
+      "com": 781,
+      "std_z": 312,
+      "andi": 168,
+      "neg": 55,
+      "bclr": 50,
+      "pop": 36,
+      "push": 36,
+      "elpm_z_postinc": 28,
+      "ld_z_postinc": 26,
+      "cpse": 11,
+      "out_instr": 10,
+      "in_instr": 4
+    }
+  },
+  "funcmix": {
+    "available": true,
+    "total": 2076267,
+    "classes": {
+      "__mulsf3_pse": 691566,
+      "__addsf3x": 439917,
+      "run_workload": 217135,
+      "__fp_round": 193370,
+      "__fp_splitA": 158483,
+      "__fp_split3": 146239,
+      "__USER_SIGNATURE_REGION_LENGTH__": 130339,
+      "__addsf3": 35964,
+      "__mulsf3": 21600,
+      "__mulsf3x": 21246,
+      "__udivmodhi4_loop": 4822,
+      "__udivmodhi4_ep": 4307,
+      "__subsf3": 4228,
+      "__floatsisf": 2527,
+      "__fp_szero": 1350,
+      ".do_clear_bss_start": 1012,
+      "main": 908,
+      "_div": 413,
+      ".do_clear_bss_loop": 336,
+      "__udivmodhi4": 236,
+      "__do_copy_data": 151,
+      "__divmodhi4_exit": 59,
+      "__fp_zero": 48,
+      "__ctors_end": 6,
+      "__do_clear_bss": 4,
+      "__heap_end": 1
+    }
+  },
+  "funcmix_cycles": {
+    "available": true,
+    "total": 2953323,
+    "classes": {
+      "__mulsf3_pse": 852570,
+      "__addsf3x": 550072,
+      "run_workload": 417623,
+      "__fp_round": 291440,
+      "__USER_SIGNATURE_REGION_LENGTH__": 232640,
+      "__fp_splitA": 217936,
+      "__fp_split3": 156725,
+      "__addsf3": 80919,
+      "__mulsf3": 75069,
+      "__mulsf3x": 53115,
+      "__udivmodhi4_loop": 5715,
+      "__udivmodhi4_ep": 5428,
+      "__subsf3": 4228,
+      "__floatsisf": 3104,
+      "__fp_szero": 2025,
+      ".do_clear_bss_start": 1351,
+      "main": 1064,
+      "_div": 826,
+      ".do_clear_bss_loop": 672,
+      "__udivmodhi4": 295,
+      "__divmodhi4_exit": 236,
+      "__do_copy_data": 208,
+      "__fp_zero": 48,
+      "__ctors_end": 6,
+      "__do_clear_bss": 5,
+      "__heap_end": 3
+    }
+  },
+  "funccalls": {
+    "available": true,
+    "total": 118161,
+    "classes": {
+      "__fp_splitA": 19614,
+      "__fp_split3": 19614,
+      "__fp_round": 19614,
+      "__mulsf3x": 10623,
+      "__mulsf3": 10623,
+      "__mulsf3_pse": 10623,
+      "__addsf3x": 8991,
+      "__addsf3": 8991,
+      "__subsf3": 4228,
+      "__USER_SIGNATURE_REGION_LENGTH__": 2112,
+      "__udivmodhi4_ep": 1003,
+      "__udivmodhi4_loop": 944,
+      ".do_clear_bss_start": 337,
+      ".do_clear_bss_loop": 336,
+      "__fp_szero": 225,
+      "__udivmodhi4": 59,
+      "_div": 59,
+      "__divmodhi4_exit": 59,
+      "__floatsisf": 52,
+      "__fp_zero": 48,
+      "__ctors_end": 1,
+      "__heap_end": 1,
+      "__do_copy_data": 1,
+      "__do_clear_bss": 1,
+      "run_workload": 1,
+      "main": 1
+    }
+  },
+  "runtime_cost": {
+    "available": true,
+    "total_cycles": 2953323,
+    "by_function": {
+      "__mulsf3_pse": {
+        "cost_cycles": 852570,
+        "calls": 10623,
+        "cyc_per_call": 80.26
+      },
+      "__addsf3x": {
+        "cost_cycles": 550072,
+        "calls": 8991,
+        "cyc_per_call": 61.18
+      },
+      "run_workload": {
+        "cost_cycles": 417623,
+        "calls": 1,
+        "cyc_per_call": 417623.0
+      },
+      "__fp_round": {
+        "cost_cycles": 291440,
+        "calls": 19614,
+        "cyc_per_call": 14.86
+      },
+      "__USER_SIGNATURE_REGION_LENGTH__": {
+        "cost_cycles": 232640,
+        "calls": 2112,
+        "cyc_per_call": 110.15
+      },
+      "__fp_splitA": {
+        "cost_cycles": 217936,
+        "calls": 19614,
+        "cyc_per_call": 11.11
+      },
+      "__fp_split3": {
+        "cost_cycles": 156725,
+        "calls": 19614,
+        "cyc_per_call": 7.99
+      },
+      "__addsf3": {
+        "cost_cycles": 80919,
+        "calls": 8991,
+        "cyc_per_call": 9.0
+      },
+      "__mulsf3": {
+        "cost_cycles": 75069,
+        "calls": 10623,
+        "cyc_per_call": 7.07
+      },
+      "__mulsf3x": {
+        "cost_cycles": 53115,
+        "calls": 10623,
+        "cyc_per_call": 5.0
+      },
+      "__udivmodhi4_loop": {
+        "cost_cycles": 5715,
+        "calls": 944,
+        "cyc_per_call": 6.05
+      },
+      "__udivmodhi4_ep": {
+        "cost_cycles": 5428,
+        "calls": 1003,
+        "cyc_per_call": 5.41
+      },
+      "__subsf3": {
+        "cost_cycles": 4228,
+        "calls": 4228,
+        "cyc_per_call": 1.0
+      },
+      "__floatsisf": {
+        "cost_cycles": 3104,
+        "calls": 52,
+        "cyc_per_call": 59.69
+      },
+      "__fp_szero": {
+        "cost_cycles": 2025,
+        "calls": 225,
+        "cyc_per_call": 9.0
+      },
+      ".do_clear_bss_start": {
+        "cost_cycles": 1351,
+        "calls": 337,
+        "cyc_per_call": 4.01
+      },
+      "main": {
+        "cost_cycles": 1064,
+        "calls": 1,
+        "cyc_per_call": 1064.0
+      },
+      "_div": {
+        "cost_cycles": 826,
+        "calls": 59,
+        "cyc_per_call": 14.0
+      },
+      ".do_clear_bss_loop": {
+        "cost_cycles": 672,
+        "calls": 336,
+        "cyc_per_call": 2.0
+      },
+      "__udivmodhi4": {
+        "cost_cycles": 295,
+        "calls": 59,
+        "cyc_per_call": 5.0
+      },
+      "__divmodhi4_exit": {
+        "cost_cycles": 236,
+        "calls": 59,
+        "cyc_per_call": 4.0
+      },
+      "__do_copy_data": {
+        "cost_cycles": 208,
+        "calls": 1,
+        "cyc_per_call": 208.0
+      },
+      "__fp_zero": {
+        "cost_cycles": 48,
+        "calls": 48,
+        "cyc_per_call": 1.0
+      },
+      "__ctors_end": {
+        "cost_cycles": 6,
+        "calls": 1,
+        "cyc_per_call": 6.0
+      },
+      "__do_clear_bss": {
+        "cost_cycles": 5,
+        "calls": 1,
+        "cyc_per_call": 5.0
+      },
+      "__heap_end": {
+        "cost_cycles": 3,
+        "calls": 1,
+        "cyc_per_call": 3.0
+      }
+    }
+  },
+  "raw": {
+    "stats": "cat2-22-biquad-i11-8879155f-1781456707.stats.txt",
+    "opmix": "cat2-22-biquad-i11-8879155f-1781456707.opmix.txt",
+    "opmix_svg": "cat2-22-biquad-i11-8879155f-1781456707.opmix.svg",
+    "cycles": "cat2-22-biquad-i11-8879155f-1781456707.cycles.txt",
+    "cycles_svg": "cat2-22-biquad-i11-8879155f-1781456707.cycles.svg",
+    "funcmix": "cat2-22-biquad-i11-8879155f-1781456707.funcmix.txt",
+    "funcmix_svg": "cat2-22-biquad-i11-8879155f-1781456707.funcmix.svg",
+    "funccyc": "cat2-22-biquad-i11-8879155f-1781456707.funccyc.txt",
+    "funccyc_svg": "cat2-22-biquad-i11-8879155f-1781456707.funccyc.svg",
+    "funccalls": "cat2-22-biquad-i11-8879155f-1781456707.funccalls.txt",
+    "funccalls_svg": "cat2-22-biquad-i11-8879155f-1781456707.funccalls.svg",
+    "cost_svg": "cat2-22-biquad-i11-8879155f-1781456707.cost.svg",
+    "trace_cmp": "gem5_crc==host_crc"
+  },
+  "note": "DSP biquad IIR x11"
+}

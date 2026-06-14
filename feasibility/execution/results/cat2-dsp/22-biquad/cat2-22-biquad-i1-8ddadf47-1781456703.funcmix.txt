@@ -1,0 +1,29 @@
+# AVR per-function instruction histogram (PC symbol)
+# columns: name count
+__mulsf3_pse 64055
+__addsf3x 39061
+run_workload 21285
+__fp_round 17962
+__fp_splitA 15055
+__fp_split3 13565
+__USER_SIGNATURE_REGION_LENGTH__ 12699
+__udivmodhi4_loop 4022
+__udivmodhi4_ep 3577
+__addsf3 3284
+__floatsisf 2527
+__mulsf3 2116
+__mulsf3x 2026
+.do_clear_bss_start 1012
+main 908
+__subsf3 388
+_div 343
+.do_clear_bss_loop 336
+__fp_szero 300
+__udivmodhi4 196
+__do_copy_data 151
+__divmodhi4_exit 49
+__ctors_end 6
+__fp_zero 5
+__do_clear_bss 4
+__heap_end 1
+# total 204933

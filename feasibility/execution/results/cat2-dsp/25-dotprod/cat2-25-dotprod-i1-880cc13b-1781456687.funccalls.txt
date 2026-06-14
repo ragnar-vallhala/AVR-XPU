@@ -1,0 +1,26 @@
+# AVR per-function CALL count (function entries = op count)
+# columns: name count
+__udivmodhi4_ep 1088
+__udivmodhi4_loop 1024
+.do_clear_bss_start 513
+.do_clear_bss_loop 512
+__fp_splitA 259
+__fp_split3 259
+__fp_round 259
+__mulsf3_pse 193
+__mulsf3 193
+__mulsf3x 193
+__floatsisf 128
+__addsf3 66
+__addsf3x 66
+__udivmodhi4 64
+_div 64
+__divmodhi4_exit 64
+__fp_szero 18
+__heap_end 1
+__ctors_end 1
+__do_copy_data 1
+__do_clear_bss 1
+run_workload 1
+main 1
+# total 4969

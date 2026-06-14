@@ -1,0 +1,29 @@
+# AVR per-function CALL count (function entries = op count)
+# columns: name count
+__fp_splitA 1834
+__fp_split3 1834
+__fp_round 1834
+__mulsf3x 1013
+__mulsf3 1013
+__mulsf3_pse 1013
+__udivmodhi4_ep 833
+__addsf3x 821
+__addsf3 821
+__udivmodhi4_loop 784
+__subsf3 388
+.do_clear_bss_start 337
+.do_clear_bss_loop 336
+__USER_SIGNATURE_REGION_LENGTH__ 192
+__floatsisf 52
+__fp_szero 50
+_div 49
+__udivmodhi4 49
+__divmodhi4_exit 49
+__fp_zero 5
+__do_copy_data 1
+__do_clear_bss 1
+__ctors_end 1
+run_workload 1
+__heap_end 1
+main 1
+# total 13313

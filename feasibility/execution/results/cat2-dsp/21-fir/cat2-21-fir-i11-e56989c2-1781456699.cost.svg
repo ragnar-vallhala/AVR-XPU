@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="805" height="472" font-family="monospace" font-size="12">
+<rect width="805" height="472" fill="white"/>
+<text x="10" y="22" font-size="15" font-weight="bold">21-fir runtime cost (calls x cyc/call) — cat2-21-fir-i11-e56989c2-1781456699</text>
+<text x="10" y="42" font-size="11" fill="#555">cost = calls × cyc/call (= total cycles); total 2429833; top 20 = 100.0%</text>
+<text x="139" y="71" text-anchor="end">__mulsf3_pse</text>
+<rect x="145" y="61" width="420" height="13" fill="#b5651d"/>
+<text x="570" y="71">568313  (8523x67)  23.4%</text>
+<text x="139" y="91" text-anchor="end">__addsf3x</text>
+<rect x="145" y="81" width="390" height="13" fill="#b5651d"/>
+<text x="540" y="91">528379  (8987x59)  21.7%</text>
+<text x="139" y="111" text-anchor="end">run_workload</text>
+<rect x="145" y="101" width="374" height="13" fill="#b5651d"/>
+<text x="524" y="111">506238  (1x506238)  20.8%</text>
+<text x="139" y="131" text-anchor="end">__fp_round</text>
+<rect x="145" y="121" width="179" height="13" fill="#b5651d"/>
+<text x="329" y="131">241750  (17510x14)  9.9%</text>
+<text x="139" y="151" text-anchor="end">__fp_splitA</text>
+<rect x="145" y="141" width="161" height="13" fill="#b5651d"/>
+<text x="311" y="151">218201  (17510x12)  9.0%</text>
+<text x="139" y="171" text-anchor="end">__fp_split3</text>
+<rect x="145" y="161" width="101" height="13" fill="#b5651d"/>
+<text x="251" y="171">136324  (17510x8)  5.6%</text>
+<text x="139" y="191" text-anchor="end">__addsf3</text>
+<rect x="145" y="181" width="60" height="13" fill="#b5651d"/>
+<text x="210" y="191">80883  (8987x9)  3.3%</text>
+<text x="139" y="211" text-anchor="end">__mulsf3</text>
+<rect x="145" y="201" width="50" height="13" fill="#b5651d"/>
+<text x="200" y="211">67189  (8523x8)  2.8%</text>
+<text x="139" y="231" text-anchor="end">__mulsf3x</text>
+<rect x="145" y="221" width="31" height="13" fill="#b5651d"/>
+<text x="181" y="231">42615  (8523x5)  1.8%</text>
+<text x="139" y="251" text-anchor="end">__fp_szero</text>
+<rect x="145" y="241" width="13" height="13" fill="#b5651d"/>
+<text x="163" y="251">17280  (1920x9)  0.7%</text>
+<text x="139" y="271" text-anchor="end">__udivmodhi4_loop</text>
+<rect x="145" y="261" width="5" height="13" fill="#b5651d"/>
+<text x="155" y="271">7260  (1200x6)  0.3%</text>
+<text x="139" y="291" text-anchor="end">__udivmodhi4_ep</text>
+<rect x="145" y="281" width="5" height="13" fill="#b5651d"/>
+<text x="155" y="291">6900  (1275x5)  0.3%</text>
+<text x="139" y="311" text-anchor="end">__floatsisf</text>
+<rect x="145" y="301" width="3" height="13" fill="#b5651d"/>
+<text x="153" y="311">3868  (64x60)  0.2%</text>
+<text x="139" y="331" text-anchor="end">main</text>
+<rect x="145" y="321" width="1" height="13" fill="#b5651d"/>
+<text x="151" y="331">1064  (1x1064)  0.0%</text>
+<text x="139" y="351" text-anchor="end">_div</text>
+<rect x="145" y="341" width="1" height="13" fill="#b5651d"/>
+<text x="151" y="351">1050  (75x14)  0.0%</text>
+<text x="139" y="371" text-anchor="end">.do_clear_bss_start</text>
+<rect x="145" y="361" width="1" height="13" fill="#b5651d"/>
+<text x="151" y="371">1031  (257x4)  0.0%</text>
+<text x="139" y="391" text-anchor="end">.do_clear_bss_loop</text>
+<rect x="145" y="381" width="1" height="13" fill="#b5651d"/>
+<text x="151" y="391">512  (256x2)  0.0%</text>
+<text x="139" y="411" text-anchor="end">__udivmodhi4</text>
+<rect x="145" y="401" width="1" height="13" fill="#b5651d"/>
+<text x="151" y="411">375  (75x5)  0.0%</text>
+<text x="139" y="431" text-anchor="end">__divmodhi4_exit</text>
+<rect x="145" y="421" width="1" height="13" fill="#b5651d"/>
+<text x="151" y="431">300  (75x4)  0.0%</text>
+<text x="139" y="451" text-anchor="end">__do_copy_data</text>
+<rect x="145" y="441" width="1" height="13" fill="#b5651d"/>
+<text x="151" y="451">208  (1x208)  0.0%</text>
+</svg>
