@@ -14,7 +14,8 @@ results/
     <run_id>.stats.txt              # raw gem5 stats.txt (retained verbatim)
     <run_id>.opmix.txt   .opmix.svg     # per-mnemonic INSTRUCTION op-mix + histogram
     <run_id>.cycles.txt  .cycles.svg    # per-mnemonic CYCLE op-mix (where cycles go) + histogram
-    <run_id>.funcmix.txt .funcmix.svg   # per-FUNCTION op-mix (PC symbol; e.g. __divsf3) + histogram
+    <run_id>.funcmix.txt .funcmix.svg   # per-FUNCTION instruction count (PC symbol; e.g. __divsf3)
+    <run_id>.funccyc.txt .funccyc.svg   # per-FUNCTION CYCLE count (cycles spent per function)
     elf/<elfsha12>.elf              # the ELF — kept ONLY for runs that worked, content-addressed by sha
 ```
 
@@ -22,12 +23,14 @@ results/
 — every per-run artifact is prefixed with it. **`runs.csv`** is the cross-run master index; columns:
 run_id, created_utc, category, workload, kind, iters, valid, simInsts, numCycles, cpi, **arith_ipb**
 (compute insts per byte moved), elf_archived, elf_sha256, record_json, stats_file, opmix_file,
-opmix_svg, cycles_file, funcmix_file, note (<100 chars).
+opmix_svg, cycles_file, funcmix_file, funccyc_file, note (<100 chars).
 
 ### Data axes per run
 - **op-mix** (`opmix`) — what instructions run most.
 - **cycle-weighted op-mix** (`opmix_cycles`) — where the *cycles* go (count × per-op cycle cost).
-- **function-mix** (`funcmix`) — which functions/symbols dominate (e.g. softfloat `__divsf3`).
+- **function-mix** — which functions/symbols dominate, by **instructions** (`funcmix`) and by
+  **cycles** (`funcmix_cycles`); e.g. softfloat `__divsf3`. The cycle view re-ranks multi-cycle-heavy
+  functions (e.g. `__fp_round`) above their instruction-count rank.
 - **arithmetic intensity** (`metrics.mem_insts / bytes_moved / compute_insts / insts_per_byte`) —
   data-memory traffic derived from the op-mix; the roofline / memory-bound input.
 

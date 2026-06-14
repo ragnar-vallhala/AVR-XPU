@@ -1,17 +1,17 @@
 {
   "schema": "avrxpu-run/1",
-  "run_id": "cat1-11-ekf-i11-30c66b67-1781453276",
+  "run_id": "cat1-11-ekf-i11-30c66b67-1781453888",
   "workload": {
     "id": "11-ekf",
     "category": "cat1-estimation-control",
     "kernel": "EKF covariance predict (states 0..12), 24x24 fp32"
   },
   "kind": "measurement",
-  "created_utc": "2026-06-14T16:07:56Z",
-  "unixtime": 1781453276,
+  "created_utc": "2026-06-14T16:18:08Z",
+  "unixtime": 1781453888,
   "platform": {
     "runner": "navrobotec",
-    "gem5_git": "395f53619b"
+    "gem5_git": "2264c71015"
   },
   "build": {
     "mcu": "atmega1284p",
@@ -200,15 +200,55 @@
       "__heap_end": 1
     }
   },
+  "funcmix_cycles": {
+    "available": true,
+    "total": 3785558,
+    "classes": {
+      "__addsf3x": 765046,
+      "__mulsf3_pse": 727376,
+      "__stack": 360668,
+      "__fp_round": 348694,
+      "__fp_splitA": 315446,
+      "__divsf3_pse": 233106,
+      "__fp_split3": 195583,
+      "main": 180771,
+      "__addsf3": 113787,
+      "__EEPROM_REGION_LENGTH__": 108878,
+      "__mulsf3": 95545,
+      "__floatsisf": 65111,
+      "__mulsf3x": 59255,
+      "__udivmodhi4_loop": 53888,
+      "__udivmodhi4_ep": 50784,
+      "__fp_szero": 29583,
+      "ekf_predict": 27753,
+      ".do_clear_bss_start": 18439,
+      ".do_clear_bss_loop": 9216,
+      "_div": 7728,
+      "__subsf3": 4158,
+      "__divsf3": 3864,
+      "__divsf3x": 2760,
+      "__udivmodhi4": 2760,
+      "__divmodhi4_exit": 2208,
+      "__DATA_REGION_LENGTH__": 2134,
+      "__do_copy_data": 824,
+      "__fp_zero": 140,
+      "__USER_SIGNATURE_REGION_LENGTH__": 39,
+      "__ctors_end": 6,
+      "__do_clear_bss": 5,
+      "__heap_end": 3
+    }
+  },
   "raw": {
-    "stats": "cat1-11-ekf-i11-30c66b67-1781453276.stats.txt",
-    "opmix": "cat1-11-ekf-i11-30c66b67-1781453276.opmix.txt",
-    "opmix_svg": "cat1-11-ekf-i11-30c66b67-1781453276.opmix.svg",
-    "cycles": "cat1-11-ekf-i11-30c66b67-1781453276.cycles.txt",
-    "cycles_svg": "cat1-11-ekf-i11-30c66b67-1781453276.cycles.svg",
-    "funcmix": "cat1-11-ekf-i11-30c66b67-1781453276.funcmix.txt",
-    "funcmix_svg": "cat1-11-ekf-i11-30c66b67-1781453276.funcmix.svg",
+    "stats": "cat1-11-ekf-i11-30c66b67-1781453888.stats.txt",
+    "opmix": "cat1-11-ekf-i11-30c66b67-1781453888.opmix.txt",
+    "opmix_svg": "cat1-11-ekf-i11-30c66b67-1781453888.opmix.svg",
+    "cycles": "cat1-11-ekf-i11-30c66b67-1781453888.cycles.txt",
+    "cycles_svg": "cat1-11-ekf-i11-30c66b67-1781453888.cycles.svg",
+    "funcmix": "cat1-11-ekf-i11-30c66b67-1781453888.funcmix.txt",
+    "funcmix_svg": "cat1-11-ekf-i11-30c66b67-1781453888.funcmix.svg",
+    "funccyc": "cat1-11-ekf-i11-30c66b67-1781453888.funccyc.txt",
+    "funccyc_svg": "cat1-11-ekf-i11-30c66b67-1781453888.funccyc.svg",
     "trace_cmp": "gem5_crc==host_crc"
   },
-  "note": "EKF predict x11; fp32 softfloat; arith-intensity + cycle + func axes"
+  "note": "EKF predict x11; fp32 softfloat; opmix+cycmix+funcmix+funccyc+arith axes"
 }
