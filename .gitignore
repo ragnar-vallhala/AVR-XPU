@@ -12,10 +12,9 @@ __pycache__/
 **/harness/host_trace.txt
 **/harness/gem5_trace.txt
 
-# gem5 simulation outputs
+# gem5 simulation scratch (the m5out dirs); retained run stats under results/ are KEPT
 m5out*/
 **/m5out*/
-*.stats.txt
 
 # third-party study PDFs — NOT redistributed in this public repo (docs link them by URL)
 *.pdf
