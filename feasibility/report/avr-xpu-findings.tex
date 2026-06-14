@@ -5,8 +5,15 @@
 \usepackage{array}
 \usepackage{xcolor}
 \usepackage{longtable}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
 \usepackage[hidelinks]{hyperref}
 \usepackage{caption}
+
+\definecolor{cArm}{HTML}{4677C8}
+\definecolor{cRv}{HTML}{B5651D}
+\definecolor{cBase}{HTML}{999999}
 
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\ms}{\texttt{\_\_mulsf3}}
@@ -85,7 +92,7 @@ Thirteen kernels span three categories (Table~\ref{tab:wl}). Cat-1/2 are single-
 int8 (integer MAC + requantize). Standalone microkernels match the scalar form of the reference libraries
 (PX4-ECL, Madgwick, CMSIS-DSP/NN). Build flag \code{-O1} throughout.
 
-\begin{table}[h]\centering\small
+\begin{table}[ht]\centering\small
 \caption{The thirteen workloads.}\label{tab:wl}
 \begin{tabular}{@{}llp{7.3cm}@{}}
 \toprule
@@ -116,11 +123,12 @@ no run hit an unresolved ISA gap.
 
 \section{(\S1) Workload Characterization}
 
-Table~\ref{tab:s1} gives the gross per-run cost on the AVR model. The headline is the cost of software
-floating point: kernels with little ``real'' work nonetheless retire hundreds of thousands of
-instructions.
+Table~\ref{tab:s1} gives the gross per-run cost on the AVR model, and Figure~\ref{fig:insts} plots the
+instruction counts. The headline is the cost of software floating point: kernels with little ``real''
+work nonetheless retire hundreds of thousands of instructions (note the log scale---the EKF predict alone
+is 800\,k instructions).
 
-\begin{table}[h]\centering\small
+\begin{table}[ht]\centering\small
 \caption{Per-run cost on the baseline AVR model ($N{=}1$, includes startup).}\label{tab:s1}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
@@ -143,6 +151,28 @@ workload & sim.\ insts & cycles & CPI & comp.\ insts/byte \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[ht]\centering
+\begin{tikzpicture}
+\begin{axis}[
+  xbar, xmode=log, width=12.5cm, height=7.6cm,
+  xlabel={instructions retired per run ($N{=}1$, log scale)},
+  xmin=5000, xmax=1500000,
+  bar width=7pt, enlarge y limits=0.06,
+  symbolic y coords={15-control-allocation,14-control-pid,13-quaternion,12-ahrs,25-dotprod,32-fc,24-matmul,21-fir,22-biquad,31-conv2d,23-fft,33-maxpool,11-ekf},
+  ytick=data, y tick label style={font=\footnotesize}, tick align=outside,
+  nodes near coords, nodes near coords style={font=\scriptsize}, point meta=explicit symbolic,
+]
+\addplot[fill=cArm,draw=cArm] coordinates {
+ (9429,15-control-allocation)[9.4k] (12965,14-control-pid)[13k] (16185,13-quaternion)[16k]
+ (17133,12-ahrs)[17k] (47737,25-dotprod)[48k] (131653,32-fc)[132k] (145892,24-matmul)[146k]
+ (183221,21-fir)[183k] (204933,22-biquad)[205k] (242732,31-conv2d)[243k] (243947,23-fft)[244k]
+ (249071,33-maxpool)[249k] (800482,11-ekf)[800k]};
+\end{axis}
+\end{tikzpicture}
+\caption{Per-run AVR instruction count. Even ``cheap'' control kernels cost thousands of instructions
+because every fp operation is a softfloat call.}\label{fig:insts}
+\end{figure}
+
 \paragraph{What they use most (EKF worked example).}
 The per-mnemonic op-mix of the EKF predict is dominated by multi-byte integer add/subtract-with-carry,
 branches, and shifts---i.e.\ software floating point on a core with no FPU:
@@ -150,10 +180,10 @@ branches, and shifts---i.e.\ software floating point on a core with no FPU:
 \code{eor} 37\,066, \code{ror} 34\,764, $\dots$ (53 distinct mnemonics totalling the 800\,482 instructions).
 Attributing instructions to functions makes the cause explicit: \textbf{82.1\,\% of EKF cycles are spent
 in compiler arithmetic-helper routines}. Decomposing the runtime cost as
-$\text{cost}=\text{calls}\times\text{cycles/call}$ (Table~\ref{tab:cost}) shows where the time goes and,
-crucially, the \emph{operation counts} a hardware datapath would replace.
+$\text{cost}=\text{calls}\times\text{cycles/call}$ (Table~\ref{tab:cost}, Figure~\ref{fig:ekfcost}) shows
+where the time goes and, crucially, the \emph{operation counts} a hardware datapath would replace.
 
-\begin{table}[h]\centering\small
+\begin{table}[ht]\centering\small
 \caption{EKF predict: runtime cost by function (one predict + startup).}\label{tab:cost}
 \begin{tabular}{@{}lrrr@{}}
 \toprule
@@ -169,6 +199,24 @@ function & cost (cycles) & calls & cycles/call \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[ht]\centering
+\begin{tikzpicture}
+\begin{axis}[
+  xbar, width=12.5cm, height=5.6cm,
+  xlabel={runtime cost (cycles) $=$ calls $\times$ cycles/call},
+  xmin=0, xmax=270000, bar width=10pt, enlarge y limits=0.12,
+  ytick={0,1,2,3,4,5},
+  yticklabels={\texttt{\_\_udivmodhi4},\texttt{\_\_floatsisf},\texttt{\_\_addsf3},\texttt{\_\_mulsf3},\texttt{main},\texttt{\_\_divsf3}},
+  y tick label style={font=\footnotesize}, tick align=outside,
+  nodes near coords, nodes near coords style={font=\scriptsize},
+]
+\addplot[fill=cRv,draw=cRv] coordinates {(53888,0)(65111,1)(98802,2)(112826,3)(147140,4)(233106,5)};
+\end{axis}
+\end{tikzpicture}
+\caption{Where EKF cycles go. Floating-point divide (\ds) is the single largest cost; the softfloat
+helpers together are 82\,\% of all cycles.}\label{fig:ekfcost}
+\end{figure}
+
 \noindent Two observations generalize across the suite: \textbf{(a)} fp work is overwhelmingly softfloat,
 and \textbf{(b)} the \emph{mix} of fp ops differs by kernel---the EKF is \emph{division}-heavy (552
 divides at $\sim$422 cycles each, the single largest cost), whereas Madgwick AHRS, by design, uses a fast
@@ -178,13 +226,49 @@ fp-divide / fp-multiply / int8-MAC split is the primary input to ISA design (\S6
 
 \section{(\S2) Roofline / Headroom Model}
 
-To turn the characterization into a design verdict we plot each kernel on a roofline. Per-invocation
-operation count (softfloat calls for fp kernels), bytes moved (load/store count), and cycles are taken
-from the two-run difference. The model assumes AVR data-memory bandwidth
-$\text{BW}=0.5$~byte/cycle (load/store $\approx$2 cycles/byte), a hardware-arithmetic compute roof of $W$
-ops/cycle at SIMD width $W$, and a memory$\leftrightarrow$compute ridge at intensity $I=2W$ ops/byte.
+To turn the characterization into a design verdict we plot each kernel on a roofline
+(Figure~\ref{fig:roofline}). Per-invocation operation count (softfloat calls for fp kernels), bytes moved
+(load/store count), and cycles are taken from the two-run difference. The model assumes AVR data-memory
+bandwidth $\text{BW}=0.5$~byte/cycle (load/store $\approx$2 cycles/byte), a hardware-arithmetic compute
+roof of $W$ ops/cycle at SIMD width $W$, and a memory$\leftrightarrow$compute ridge at intensity $I=2W$
+ops/byte.
 
-\begin{table}[h]\centering\small
+\begin{figure}[ht]\centering
+\begin{tikzpicture}
+\begin{axis}[
+  xmode=log, ymode=log, width=13cm, height=8cm,
+  xlabel={arithmetic intensity $I$ (ops / byte moved)},
+  ylabel={attainable ops/cycle},
+  xmin=0.06, xmax=64, ymin=0.004, ymax=8,
+  legend pos=south east, legend cell align=left, legend style={font=\footnotesize},
+  grid=both, major grid style={line width=.2pt,draw=gray!25}, minor tick num=1,
+]
+% W=1 and W=4 hardware-arithmetic roofs (perf = min(W, BW*I))
+\addplot[cArm,thick,domain=0.06:64,samples=200]{min(1,0.5*x)}; \addlegendentry{$W{=}1$ roof}
+\addplot[cRv,thick,domain=0.06:64,samples=200]{min(4,0.5*x)};  \addlegendentry{$W{=}4$ roof}
+% scalar ridge (W=1) at I=2
+\addplot[gray,dashed] coordinates {(2,0.004)(2,1)};
+\addlegendentry{scalar ridge ($I{=}2$)}
+% kernels at HW-fp (W=1) attainable perf
+\addplot[only marks,mark=*,mark size=2.2pt,black] coordinates {
+ (0.27,0.135)(0.25,0.125)(0.22,0.11)(0.20,0.10)(0.19,0.095)(0.18,0.09)
+ (0.11,0.055)(0.11,0.055)(0.11,0.055)(0.08,0.04)(0.61,0.305)(0.53,0.265)};
+\addlegendentry{kernel @ HW fp/MAC ($W{=}1$)}
+% kernels at softfloat baseline
+\addplot[only marks,mark=o,mark size=2.4pt,cBase] coordinates {
+ (0.27,0.00807)(0.25,0.00763)(0.22,0.00765)(0.20,0.00905)(0.19,0.00727)(0.18,0.00963)
+ (0.11,0.00812)(0.11,0.0091)(0.11,0.00636)(0.08,0.00577)(0.61,0.05)(0.53,0.0415)};
+\addlegendentry{kernel @ AVR softfloat (now)}
+\node[font=\scriptsize,gray] at (axis cs:0.16,0.0048) {all kernels left of ridge $\Rightarrow$ memory-bound};
+\end{axis}
+\end{tikzpicture}
+\caption{Roofline. Vertical gap between an open (softfloat, now) and filled (HW fp) marker is the
+attainable speedup ($\approx$6--16$\times$). Every kernel sits \emph{left} of the scalar ridge, so the
+filled markers ride the sloped (memory-bound) part of the roof---widening $W$ lifts the flat roof but not
+these points: \textbf{wide SIMD is wasted}.}\label{fig:roofline}
+\end{figure}
+
+\begin{table}[ht]\centering\small
 \caption{Roofline (per invocation, i11$-$i1). \emph{helper\%} $=$ cycles in arithmetic-helper routines;
 \emph{sp@W} $=$ attainable speedup over softfloat with a HW datapath at SIMD width $W$.}\label{tab:roof}
 \begin{tabular}{@{}llrrrrrrr@{}}
@@ -230,10 +314,35 @@ all kernels. \code{33-maxpool} is excluded (no MAC---pure int8 compares).
 To quantify what the AVR-XPU must beat, the \emph{same} C kernels were cross-compiled for AArch64
 (NEON+VFP) and RV64GC (scalar F/D) and run on gem5's multi-ISA build. Because all three ISAs implement
 IEEE-754, the host CRC validates AVR, ARM, \emph{and} RISC-V identically (the \texttt{crc} column).
-Per-invocation instruction counts (i11$-$i1) are model-independent and directly comparable; cycle counts
-are not (different CPU models), so we report instructions.
+Per-invocation instruction counts (i11$-$i1) are model-independent and directly comparable
+(Figure~\ref{fig:speedup}); cycle counts are not (different CPU models), so we report instructions.
 
-\begin{table}[h]\centering\small
+\begin{figure}[ht]\centering
+\begin{tikzpicture}
+\begin{axis}[
+  xbar, width=12.5cm, height=9.2cm,
+  xlabel={instructions on AVR softfloat $\div$ instructions on the HW-FP ISA ($\times$)},
+  xmin=0, xmax=85, bar width=4.5pt, enlarge y limits=0.04,
+  symbolic y coords={33-maxpool,31-conv2d,32-fc,21-fir,15-control-alloc,24-matmul,23-fft,25-dotprod,22-biquad,14-control-pid,13-quaternion,11-ekf,12-ahrs},
+  ytick=data, y tick label style={font=\footnotesize}, tick align=outside,
+  legend pos=south east, legend style={font=\footnotesize},
+  nodes near coords, nodes near coords style={font=\scriptsize,/pgf/number format/fixed,/pgf/number format/precision=1},
+]
+\addplot[fill=cArm,draw=cArm] coordinates {
+ (1.1,33-maxpool)(7.5,31-conv2d)(8.0,32-fc)(16.9,21-fir)(18.8,15-control-alloc)(21.1,24-matmul)
+ (23.2,23-fft)(27.0,25-dotprod)(33.5,22-biquad)(35.0,14-control-pid)(38.2,13-quaternion)(44.6,11-ekf)(75.9,12-ahrs)};
+\addplot[fill=cRv,draw=cRv] coordinates {
+ (0.6,33-maxpool)(5.9,31-conv2d)(7.0,32-fc)(18.4,21-fir)(18.1,15-control-alloc)(23.7,24-matmul)
+ (20.2,23-fft)(26.9,25-dotprod)(35.0,22-biquad)(35.3,14-control-pid)(37.4,13-quaternion)(42.6,11-ekf)(66.8,12-ahrs)};
+\legend{AVR/ARM64, AVR/RISC-V}
+\end{axis}
+\end{tikzpicture}
+\caption{How many \emph{more} instructions AVR softfloat needs than an FPU-equipped core, per invocation.
+fp kernels (top) cost 17--76$\times$; int8 kernels (bottom three) only 6--8$\times$; pure-compare
+\code{maxpool} is a wash ($\sim$1$\times$, RISC-V worse).}\label{fig:speedup}
+\end{figure}
+
+\begin{table}[ht]\centering\small
 \caption{AVR softfloat vs.\ ARM64 / RISC-V with hardware FP: instructions \emph{per invocation}.
 \emph{fp(A/Ar/Rv)} $=$ fp ops issued on each (softfloat \emph{calls} for AVR; fp \emph{instructions} for
 ARM/RISC-V). All CRC-validated.}\label{tab:base}
@@ -308,7 +417,7 @@ charts), and the analysis scripts (\code{roofline.py}, \code{compare\_isa.py}) a
 \code{feasibility/execution/}; the gem5 model is at
 \href{https://github.com/ragnar-vallhala/gem5}{github.com/ragnar-vallhala/gem5} (branch \code{btp}).
 Each run is recorded as a JSON record (schema \code{avrxpu-run/1}) indexed by \code{results/runs.csv}, with
-the producing ELF archived by content hash. Charts referenced above are emitted as SVG alongside the data
-(\code{results/roofline.svg}, \code{results/baseline\_compare.svg}, and per-run op-mix histograms).
+the producing ELF archived by content hash. Build this report with \code{./build.sh} (runs \code{pdflatex}
+twice so all cross-references resolve).
 
 \end{document}
