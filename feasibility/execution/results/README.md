@@ -17,6 +17,7 @@ results/
     <run_id>.funcmix.txt .funcmix.svg   # per-FUNCTION instruction count (PC symbol; e.g. __divsf3)
     <run_id>.funccyc.txt .funccyc.svg     # per-FUNCTION CYCLE count (cycles spent per function)
     <run_id>.funccalls.txt .funccalls.svg # per-FUNCTION CALL count (entry-address hits: calls + branches)
+    <run_id>.cost.svg                     # DERIVED runtime-cost chart: per fn, calls x cyc/call (no .txt)
     elf/<elfsha12>.elf              # the ELF — kept ONLY for runs that worked, content-addressed by sha
 ```
 
@@ -24,7 +25,7 @@ results/
 — every per-run artifact is prefixed with it. **`runs.csv`** is the cross-run master index; columns:
 run_id, created_utc, category, workload, kind, iters, valid, simInsts, numCycles, cpi, **arith_ipb**
 (compute insts per byte moved), elf_archived, elf_sha256, record_json, stats_file, opmix_file,
-opmix_svg, cycles_file, funcmix_file, funccyc_file, funccalls_file, note (<100 chars).
+opmix_svg, cycles_file, funcmix_file, funccyc_file, funccalls_file, cost_svg, note (<100 chars).
 
 ### Data axes per run
 - **op-mix** (`opmix`) — what instructions run most.
@@ -36,6 +37,9 @@ opmix_svg, cycles_file, funcmix_file, funccyc_file, funccalls_file, note (<100 c
   **operation count** (e.g. `__addsf3` calls = #fp-adds a HW instruction would replace). Local labels
   are kept (optimized asm branches into blocks too). Total cost of any block = `funccalls × (funccyc /
   funccalls)` = `funccyc`. This is the primary lever for **ISA-extension** decisions.
+- **runtime cost** (`runtime_cost` in JSON + `.cost.svg`) — *derived*, no extra raw file: per function
+  **calls × cyc/call (= total cycles)**, ranked, each bar annotated `cost (calls x cyc/call)`. The
+  bottom-line "where the time goes" chart (e.g. EKF: `__divsf3` ~233k cyc = 552 × 422).
 - **arithmetic intensity** (`metrics.mem_insts / bytes_moved / compute_insts / insts_per_byte`) —
   data-memory traffic derived from the op-mix; the roofline / memory-bound input.
 

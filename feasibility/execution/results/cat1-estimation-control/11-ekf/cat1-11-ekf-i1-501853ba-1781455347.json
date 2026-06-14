@@ -1,14 +1,14 @@
 {
   "schema": "avrxpu-run/1",
-  "run_id": "cat1-11-ekf-i1-501853ba-1781454701",
+  "run_id": "cat1-11-ekf-i1-501853ba-1781455347",
   "workload": {
     "id": "11-ekf",
     "category": "cat1-estimation-control",
     "kernel": "EKF covariance predict (states 0..12), 24x24 fp32"
   },
   "kind": "measurement",
-  "created_utc": "2026-06-14T16:31:41Z",
-  "unixtime": 1781454701,
+  "created_utc": "2026-06-14T16:42:27Z",
+  "unixtime": 1781455347,
   "platform": {
     "runner": "navrobotec",
     "gem5_git": "adac491a9e"
@@ -275,19 +275,186 @@
       "__EEPROM_REGION_LENGTH__": 1
     }
   },
+  "runtime_cost": {
+    "available": true,
+    "total_cycles": 1022010,
+    "by_function": {
+      "__divsf3_pse": {
+        "cost_cycles": 233106,
+        "calls": 552,
+        "cyc_per_call": 422.29
+      },
+      "main": {
+        "cost_cycles": 147140,
+        "calls": 1,
+        "cyc_per_call": 147140.0
+      },
+      "__mulsf3_pse": {
+        "cost_cycles": 112826,
+        "calls": 1601,
+        "cyc_per_call": 70.47
+      },
+      "__addsf3x": {
+        "cost_cycles": 98802,
+        "calls": 1673,
+        "cyc_per_call": 59.06
+      },
+      "__floatsisf": {
+        "cost_cycles": 65111,
+        "calls": 1152,
+        "cyc_per_call": 56.52
+      },
+      "__udivmodhi4_loop": {
+        "cost_cycles": 53888,
+        "calls": 8832,
+        "cyc_per_call": 6.1
+      },
+      "__fp_round": {
+        "cost_cycles": 52630,
+        "calls": 3826,
+        "cyc_per_call": 13.76
+      },
+      "__udivmodhi4_ep": {
+        "cost_cycles": 50784,
+        "calls": 9384,
+        "cyc_per_call": 5.41
+      },
+      "__fp_splitA": {
+        "cost_cycles": 45726,
+        "calls": 3826,
+        "cyc_per_call": 11.95
+      },
+      "__stack": {
+        "cost_cycles": 32760,
+        "calls": 0,
+        "cyc_per_call": null
+      },
+      "__fp_split3": {
+        "cost_cycles": 30173,
+        "calls": 3826,
+        "cyc_per_call": 7.89
+      },
+      ".do_clear_bss_start": {
+        "cost_cycles": 18439,
+        "calls": 4609,
+        "cyc_per_call": 4.0
+      },
+      "__addsf3": {
+        "cost_cycles": 15057,
+        "calls": 1673,
+        "cyc_per_call": 9.0
+      },
+      "__mulsf3": {
+        "cost_cycles": 12355,
+        "calls": 1601,
+        "cyc_per_call": 7.72
+      },
+      "__EEPROM_REGION_LENGTH__": {
+        "cost_cycles": 9894,
+        "calls": 1,
+        "cyc_per_call": 9894.0
+      },
+      ".do_clear_bss_loop": {
+        "cost_cycles": 9216,
+        "calls": 4608,
+        "cyc_per_call": 2.0
+      },
+      "__mulsf3x": {
+        "cost_cycles": 8005,
+        "calls": 1601,
+        "cyc_per_call": 5.0
+      },
+      "_div": {
+        "cost_cycles": 7728,
+        "calls": 552,
+        "cyc_per_call": 14.0
+      },
+      "__divsf3": {
+        "cost_cycles": 3864,
+        "calls": 552,
+        "cyc_per_call": 7.0
+      },
+      "__fp_szero": {
+        "cost_cycles": 2790,
+        "calls": 310,
+        "cyc_per_call": 9.0
+      },
+      "__udivmodhi4": {
+        "cost_cycles": 2760,
+        "calls": 552,
+        "cyc_per_call": 5.0
+      },
+      "__divsf3x": {
+        "cost_cycles": 2760,
+        "calls": 552,
+        "cyc_per_call": 5.0
+      },
+      "__USER_SIGNATURE_REGION_LENGTH__": {
+        "cost_cycles": 2546,
+        "calls": 1,
+        "cyc_per_call": 2546.0
+      },
+      "__divmodhi4_exit": {
+        "cost_cycles": 2208,
+        "calls": 552,
+        "cyc_per_call": 4.0
+      },
+      "__do_copy_data": {
+        "cost_cycles": 824,
+        "calls": 1,
+        "cyc_per_call": 824.0
+      },
+      "__subsf3": {
+        "cost_cycles": 378,
+        "calls": 378,
+        "cyc_per_call": 1.0
+      },
+      "__DATA_REGION_LENGTH__": {
+        "cost_cycles": 195,
+        "calls": 1,
+        "cyc_per_call": 195.0
+      },
+      "__fp_zero": {
+        "cost_cycles": 23,
+        "calls": 23,
+        "cyc_per_call": 1.0
+      },
+      "ekf_predict": {
+        "cost_cycles": 8,
+        "calls": 1,
+        "cyc_per_call": 8.0
+      },
+      "__ctors_end": {
+        "cost_cycles": 6,
+        "calls": 1,
+        "cyc_per_call": 6.0
+      },
+      "__do_clear_bss": {
+        "cost_cycles": 5,
+        "calls": 1,
+        "cyc_per_call": 5.0
+      },
+      "__heap_end": {
+        "cost_cycles": 3,
+        "calls": 1,
+        "cyc_per_call": 3.0
+      }
+    }
+  },
   "raw": {
-    "stats": "cat1-11-ekf-i1-501853ba-1781454701.stats.txt",
-    "opmix": "cat1-11-ekf-i1-501853ba-1781454701.opmix.txt",
-    "opmix_svg": "cat1-11-ekf-i1-501853ba-1781454701.opmix.svg",
-    "cycles": "cat1-11-ekf-i1-501853ba-1781454701.cycles.txt",
-    "cycles_svg": "cat1-11-ekf-i1-501853ba-1781454701.cycles.svg",
-    "funcmix": "cat1-11-ekf-i1-501853ba-1781454701.funcmix.txt",
-    "funcmix_svg": "cat1-11-ekf-i1-501853ba-1781454701.funcmix.svg",
-    "funccyc": "cat1-11-ekf-i1-501853ba-1781454701.funccyc.txt",
-    "funccyc_svg": "cat1-11-ekf-i1-501853ba-1781454701.funccyc.svg",
-    "funccalls": "cat1-11-ekf-i1-501853ba-1781454701.funccalls.txt",
-    "funccalls_svg": "cat1-11-ekf-i1-501853ba-1781454701.funccalls.svg",
+    "stats": "cat1-11-ekf-i1-501853ba-1781455347.stats.txt",
+    "opmix": "cat1-11-ekf-i1-501853ba-1781455347.opmix.txt",
+    "opmix_svg": "cat1-11-ekf-i1-501853ba-1781455347.opmix.svg",
+    "cycles": "cat1-11-ekf-i1-501853ba-1781455347.cycles.txt",
+    "cycles_svg": "cat1-11-ekf-i1-501853ba-1781455347.cycles.svg",
+    "funcmix": "cat1-11-ekf-i1-501853ba-1781455347.funcmix.txt",
+    "funcmix_svg": "cat1-11-ekf-i1-501853ba-1781455347.funcmix.svg",
+    "funccyc": "cat1-11-ekf-i1-501853ba-1781455347.funccyc.txt",
+    "funccyc_svg": "cat1-11-ekf-i1-501853ba-1781455347.funccyc.svg",
+    "funccalls": "cat1-11-ekf-i1-501853ba-1781455347.funccalls.txt",
+    "funccalls_svg": "cat1-11-ekf-i1-501853ba-1781455347.funccalls.svg",
+    "cost_svg": "cat1-11-ekf-i1-501853ba-1781455347.cost.svg",
     "trace_cmp": "gem5_crc==host_crc"
   },
-  "note": "EKF predict x1; 6 axes: opmix,cyc,funcmix,funccyc,funccalls,arith"
+  "note": "EKF predict x1; full axes + derived runtime-cost chart"
 }

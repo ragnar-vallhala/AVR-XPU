@@ -29,7 +29,7 @@ METRIC_KEYS = {
 CSV_FIELDS = ["run_id", "created_utc", "category", "workload", "kind", "iters", "valid",
               "simInsts", "numCycles", "cpi", "arith_ipb", "elf_archived", "elf_sha256",
               "record_json", "stats_file", "opmix_file", "opmix_svg",
-              "cycles_file", "funcmix_file", "funccyc_file", "funccalls_file", "note"]
+              "cycles_file", "funcmix_file", "funccyc_file", "funccalls_file", "cost_svg", "note"]
 
 # AVR mnemonics that move a byte to/from memory (data, stack, or program memory).
 # Excludes ldi (load-immediate), mov/movw (reg-reg) and in/out (peripheral I/O).
@@ -105,6 +105,36 @@ def make_svg(histo, title, total, top=20):
         o.append(f'<text x="{padl-6}" y="{y+13}" text-anchor="end">{mn}</text>')
         o.append(f'<rect x="{padl}" y="{y+3}" width="{bw}" height="{rowh-7}" fill="#4677c8"/>')
         o.append(f'<text x="{padl+bw+5}" y="{y+13}">{c}  {100.0*c/total:.1f}%</text>')
+    o.append("</svg>")
+    return "\n".join(o)
+
+
+def make_cost_svg(funccyc, funccalls, title, top=20):
+    """Overall runtime-cost chart: per function, cost = calls × cyc/call (= total
+    cycles), ranked, with the breakdown shown in each bar. Derived only."""
+    items = sorted(funccyc.items(), key=lambda kv: -kv[1])[:top]
+    if not items:
+        return None
+    total = sum(funccyc.values())
+    maxc = items[0][1]
+    shown = sum(c for _, c in items)
+    padl = max(110, 12 + 7 * max(len(mn) for mn, _ in items))
+    rowh, padt, barmax = 20, 58, 420
+    w, h = padl + barmax + 240, padt + rowh * len(items) + 14
+    o = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
+         f'font-family="monospace" font-size="12">',
+         f'<rect width="{w}" height="{h}" fill="white"/>',
+         f'<text x="10" y="22" font-size="15" font-weight="bold">{title}</text>',
+         f'<text x="10" y="42" font-size="11" fill="#555">cost = calls × cyc/call (= total cycles); '
+         f'total {total}; top {len(items)} = {100.0*shown/total:.1f}%</text>']
+    for i, (fn, cyc) in enumerate(items):
+        y = padt + i * rowh
+        bw = max(1, round(barmax * cyc / maxc))
+        calls = funccalls.get(fn, 0)
+        cpc = cyc / calls if calls else 0
+        o.append(f'<text x="{padl-6}" y="{y+13}" text-anchor="end">{fn}</text>')
+        o.append(f'<rect x="{padl}" y="{y+3}" width="{bw}" height="{rowh-7}" fill="#b5651d"/>')
+        o.append(f'<text x="{padl+bw+5}" y="{y+13}">{cyc}  ({calls}x{cpc:.0f})  {100.0*cyc/total:.1f}%</text>')
     o.append("</svg>")
     return "\n".join(o)
 
@@ -186,6 +216,18 @@ def main(argv):
     funccyc_txt, funccyc_svg = save(funccyc, "avr_funccyc.txt", ".funccyc", "function-mix (cycles)")
     fcall_txt, fcall_svg = save(funccalls, "avr_funccalls.txt", ".funccalls", "function calls (count)")
 
+    # Derived overall runtime-cost (no .txt — derivable): per function cost = calls × cyc/call.
+    cost_svg, runtime_cost = None, {}
+    if funccyc:
+        for fn, cyc in sorted(funccyc.items(), key=lambda kv: -kv[1]):
+            calls = funccalls.get(fn, 0)
+            runtime_cost[fn] = {"cost_cycles": cyc, "calls": calls,
+                                "cyc_per_call": round(cyc / calls, 2) if calls else None}
+        cost_svg = run_id + ".cost.svg"
+        with open(os.path.join(outdir, cost_svg), "w") as f:
+            f.write(make_cost_svg(funccyc, funccalls,
+                                  f"{a.workload} runtime cost (calls x cyc/call) — {run_id}") + "\n")
+
     elf_archived = None
     if valid and a.elf and elf_sha and not a.no_store_elf:
         elfdir = os.path.join(outdir, "elf")
@@ -213,10 +255,14 @@ def main(argv):
         "opmix": section(opmix), "opmix_cycles": section(cycmix),
         "funcmix": section(funcmix), "funcmix_cycles": section(funccyc),
         "funccalls": section(funccalls),
+        "runtime_cost": {"available": bool(runtime_cost),
+                         "total_cycles": sum(funccyc.values()) if funccyc else 0,
+                         "by_function": runtime_cost},
         "raw": {"stats": stats_file, "opmix": opmix_txt, "opmix_svg": opmix_svg,
                 "cycles": cyc_txt, "cycles_svg": cyc_svg, "funcmix": func_txt,
                 "funcmix_svg": func_svg, "funccyc": funccyc_txt, "funccyc_svg": funccyc_svg,
-                "funccalls": fcall_txt, "funccalls_svg": fcall_svg, "trace_cmp": a.trace_cmp},
+                "funccalls": fcall_txt, "funccalls_svg": fcall_svg, "cost_svg": cost_svg,
+                "trace_cmp": a.trace_cmp},
         "note": note,
     }
     record_json = run_id + ".json"
@@ -239,7 +285,7 @@ def main(argv):
                     "elf_sha256": elf_sha, "record_json": j(record_json), "stats_file": j(stats_file),
                     "opmix_file": j(opmix_txt), "opmix_svg": j(opmix_svg), "cycles_file": j(cyc_txt),
                     "funcmix_file": j(func_txt), "funccyc_file": j(funccyc_txt),
-                    "funccalls_file": j(fcall_txt), "note": note})
+                    "funccalls_file": j(fcall_txt), "cost_svg": j(cost_svg), "note": note})
 
     print(f"recorded {run_id}  valid={valid}  simInsts={metrics.get('simInsts')}  "
           f"mem={mem_i} ipb={ipb}  opmix/cyc/func={'Y' if opmix else 'N'}"
