@@ -1,0 +1,371 @@
+{
+  "schema": "avrxpu-run/1",
+  "run_id": "cat1-13-quaternion-i11-0908da41-1781455890",
+  "workload": {
+    "id": "13-quaternion",
+    "category": "cat1-estimation-control",
+    "kernel": "Quaternion glue: mul, normalize, rotate-vec, DCM (chained)"
+  },
+  "kind": "measurement",
+  "created_utc": "2026-06-14T16:51:30Z",
+  "unixtime": 1781455890,
+  "platform": {
+    "runner": "navrobotec",
+    "gem5_git": "adac491a9e"
+  },
+  "build": {
+    "mcu": "atmega1284p",
+    "toolchain": "avr-gcc 7.3.0",
+    "cflags": "-O1 -ffp-contract=off -fno-fast-math",
+    "iters": 11,
+    "trace": false,
+    "elf": "quat_avr_i11.elf",
+    "elf_sha256": "0908da414b8bcd16dc77d76362e0776a9b1948a47fbf7f2ef9175f96c5196471",
+    "elf_archived": "cat1-estimation-control/13-quaternion/elf/0908da414b8b.elf"
+  },
+  "validation": {
+    "host_crc": "d1447830",
+    "gem5_crc": "d1447830",
+    "checkpoints": 0,
+    "match": true
+  },
+  "exit": {
+    "cause": "AVR Syscall Exit",
+    "ok": true
+  },
+  "metrics": {
+    "simInsts": 120144,
+    "simOps": 120144,
+    "numCycles": 172229,
+    "cpi": 1.433521,
+    "ipc": 0.697583,
+    "mem_insts": 9105,
+    "bytes_moved": 9105,
+    "compute_insts": 111039,
+    "insts_per_byte": 12.195
+  },
+  "opmix": {
+    "available": true,
+    "total": 120144,
+    "classes": {
+      "adc": 13369,
+      "add": 11875,
+      "brbs": 11581,
+      "ror_inst": 8034,
+      "brbc": 6947,
+      "eor": 6638,
+      "movw": 5832,
+      "cpc": 4960,
+      "mul": 4223,
+      "call": 4170,
+      "ret": 4169,
+      "mov": 3945,
+      "ldd_y": 3520,
+      "cpi": 3504,
+      "sbci": 2768,
+      "subi": 2269,
+      "inc": 2152,
+      "cp": 1685,
+      "jmp": 1633,
+      "std_y": 1386,
+      "bst": 1375,
+      "sbrc": 1375,
+      "lsr": 1236,
+      "ldd_z": 1064,
+      "rjmp": 817,
+      "ldi": 796,
+      "or": 741,
+      "ld_x_postinc": 693,
+      "bld": 659,
+      "andi": 648,
+      "and": 643,
+      "push": 596,
+      "pop": 594,
+      "sbc": 585,
+      "std_z": 572,
+      "sub": 547,
+      "com": 472,
+      "st_x_postinc": 363,
+      "sbiw": 275,
+      "adiw": 258,
+      "out_instr": 205,
+      "dec": 180,
+      "in_instr": 135,
+      "neg": 128,
+      "bclr": 121,
+      "ld_x": 99,
+      "st_x": 77,
+      "elpm_z_postinc": 72,
+      "ld_z_postinc": 69,
+      "sbrs": 69,
+      "asr": 11,
+      "cpse": 9
+    }
+  },
+  "opmix_cycles": {
+    "available": true,
+    "total": 172210,
+    "classes": {
+      "call": 16680,
+      "ret": 16676,
+      "brbs": 14524,
+      "adc": 13369,
+      "brbc": 12188,
+      "add": 11875,
+      "mul": 8446,
+      "ror_inst": 8034,
+      "ldd_y": 7040,
+      "eor": 6638,
+      "movw": 5832,
+      "cpc": 4960,
+      "jmp": 4899,
+      "mov": 3945,
+      "cpi": 3504,
+      "std_y": 2772,
+      "sbci": 2768,
+      "sbrc": 2343,
+      "subi": 2269,
+      "inc": 2152,
+      "ldd_z": 2128,
+      "cp": 1685,
+      "rjmp": 1634,
+      "ld_x_postinc": 1386,
+      "bst": 1375,
+      "lsr": 1236,
+      "push": 1192,
+      "pop": 1188,
+      "std_z": 1144,
+      "ldi": 796,
+      "or": 741,
+      "st_x_postinc": 726,
+      "bld": 659,
+      "andi": 648,
+      "and": 643,
+      "sbc": 585,
+      "sbiw": 550,
+      "sub": 547,
+      "adiw": 516,
+      "com": 472,
+      "out_instr": 205,
+      "ld_x": 198,
+      "dec": 180,
+      "st_x": 154,
+      "ld_z_postinc": 138,
+      "in_instr": 135,
+      "neg": 128,
+      "bclr": 121,
+      "sbrs": 92,
+      "elpm_z_postinc": 72,
+      "cpse": 11,
+      "asr": 11
+    }
+  },
+  "funcmix": {
+    "available": true,
+    "total": 120144,
+    "classes": {
+      "__addsf3x": 28379,
+      "__mulsf3_pse": 18094,
+      "__fp_splitA": 13637,
+      "__fp_round": 11590,
+      "__EEPROM_REGION_LENGTH__": 9887,
+      "__fp_split3": 9312,
+      "main": 7911,
+      "quat_rotate": 3806,
+      "quat_to_dcm": 3575,
+      "__addsf3": 3080,
+      "__USER_SIGNATURE_REGION_LENGTH__": 2838,
+      "quat_normalize": 2684,
+      "__mulsf3": 1616,
+      "__fp_szero": 1542,
+      "__mulsf3x": 1210,
+      "__do_copy_data": 372,
+      "quat_mul": 330,
+      "__subsf3": 220,
+      "__fp_zero": 54,
+      "__ctors_end": 6,
+      "__heap_end": 1
+    }
+  },
+  "funcmix_cycles": {
+    "available": true,
+    "total": 172210,
+    "classes": {
+      "__addsf3x": 36204,
+      "__mulsf3_pse": 22520,
+      "__fp_splitA": 18680,
+      "__fp_round": 18465,
+      "__EEPROM_REGION_LENGTH__": 12138,
+      "main": 10827,
+      "__fp_split3": 10640,
+      "quat_rotate": 7271,
+      "__addsf3": 6930,
+      "quat_to_dcm": 6743,
+      "__USER_SIGNATURE_REGION_LENGTH__": 5324,
+      "__mulsf3": 5047,
+      "quat_normalize": 4675,
+      "__mulsf3x": 3025,
+      "__fp_szero": 2313,
+      "quat_mul": 605,
+      "__do_copy_data": 520,
+      "__subsf3": 220,
+      "__fp_zero": 54,
+      "__ctors_end": 6,
+      "__heap_end": 3
+    }
+  },
+  "funccalls": {
+    "available": true,
+    "total": 8472,
+    "classes": {
+      "__fp_round": 1375,
+      "__fp_splitA": 1375,
+      "__fp_split3": 1375,
+      "__addsf3x": 770,
+      "__addsf3": 770,
+      "__mulsf3_pse": 605,
+      "__mulsf3x": 605,
+      "__mulsf3": 605,
+      "__EEPROM_REGION_LENGTH__": 402,
+      "__fp_szero": 257,
+      "__subsf3": 220,
+      "__fp_zero": 54,
+      "quat_mul": 11,
+      "__USER_SIGNATURE_REGION_LENGTH__": 11,
+      "quat_rotate": 11,
+      "quat_to_dcm": 11,
+      "quat_normalize": 11,
+      "main": 1,
+      "__ctors_end": 1,
+      "__heap_end": 1,
+      "__do_copy_data": 1
+    }
+  },
+  "runtime_cost": {
+    "available": true,
+    "total_cycles": 172210,
+    "by_function": {
+      "__addsf3x": {
+        "cost_cycles": 36204,
+        "calls": 770,
+        "cyc_per_call": 47.02
+      },
+      "__mulsf3_pse": {
+        "cost_cycles": 22520,
+        "calls": 605,
+        "cyc_per_call": 37.22
+      },
+      "__fp_splitA": {
+        "cost_cycles": 18680,
+        "calls": 1375,
+        "cyc_per_call": 13.59
+      },
+      "__fp_round": {
+        "cost_cycles": 18465,
+        "calls": 1375,
+        "cyc_per_call": 13.43
+      },
+      "__EEPROM_REGION_LENGTH__": {
+        "cost_cycles": 12138,
+        "calls": 402,
+        "cyc_per_call": 30.19
+      },
+      "main": {
+        "cost_cycles": 10827,
+        "calls": 1,
+        "cyc_per_call": 10827.0
+      },
+      "__fp_split3": {
+        "cost_cycles": 10640,
+        "calls": 1375,
+        "cyc_per_call": 7.74
+      },
+      "quat_rotate": {
+        "cost_cycles": 7271,
+        "calls": 11,
+        "cyc_per_call": 661.0
+      },
+      "__addsf3": {
+        "cost_cycles": 6930,
+        "calls": 770,
+        "cyc_per_call": 9.0
+      },
+      "quat_to_dcm": {
+        "cost_cycles": 6743,
+        "calls": 11,
+        "cyc_per_call": 613.0
+      },
+      "__USER_SIGNATURE_REGION_LENGTH__": {
+        "cost_cycles": 5324,
+        "calls": 11,
+        "cyc_per_call": 484.0
+      },
+      "__mulsf3": {
+        "cost_cycles": 5047,
+        "calls": 605,
+        "cyc_per_call": 8.34
+      },
+      "quat_normalize": {
+        "cost_cycles": 4675,
+        "calls": 11,
+        "cyc_per_call": 425.0
+      },
+      "__mulsf3x": {
+        "cost_cycles": 3025,
+        "calls": 605,
+        "cyc_per_call": 5.0
+      },
+      "__fp_szero": {
+        "cost_cycles": 2313,
+        "calls": 257,
+        "cyc_per_call": 9.0
+      },
+      "quat_mul": {
+        "cost_cycles": 605,
+        "calls": 11,
+        "cyc_per_call": 55.0
+      },
+      "__do_copy_data": {
+        "cost_cycles": 520,
+        "calls": 1,
+        "cyc_per_call": 520.0
+      },
+      "__subsf3": {
+        "cost_cycles": 220,
+        "calls": 220,
+        "cyc_per_call": 1.0
+      },
+      "__fp_zero": {
+        "cost_cycles": 54,
+        "calls": 54,
+        "cyc_per_call": 1.0
+      },
+      "__ctors_end": {
+        "cost_cycles": 6,
+        "calls": 1,
+        "cyc_per_call": 6.0
+      },
+      "__heap_end": {
+        "cost_cycles": 3,
+        "calls": 1,
+        "cyc_per_call": 3.0
+      }
+    }
+  },
+  "raw": {
+    "stats": "cat1-13-quaternion-i11-0908da41-1781455890.stats.txt",
+    "opmix": "cat1-13-quaternion-i11-0908da41-1781455890.opmix.txt",
+    "opmix_svg": "cat1-13-quaternion-i11-0908da41-1781455890.opmix.svg",
+    "cycles": "cat1-13-quaternion-i11-0908da41-1781455890.cycles.txt",
+    "cycles_svg": "cat1-13-quaternion-i11-0908da41-1781455890.cycles.svg",
+    "funcmix": "cat1-13-quaternion-i11-0908da41-1781455890.funcmix.txt",
+    "funcmix_svg": "cat1-13-quaternion-i11-0908da41-1781455890.funcmix.svg",
+    "funccyc": "cat1-13-quaternion-i11-0908da41-1781455890.funccyc.txt",
+    "funccyc_svg": "cat1-13-quaternion-i11-0908da41-1781455890.funccyc.svg",
+    "funccalls": "cat1-13-quaternion-i11-0908da41-1781455890.funccalls.txt",
+    "funccalls_svg": "cat1-13-quaternion-i11-0908da41-1781455890.funccalls.svg",
+    "cost_svg": "cat1-13-quaternion-i11-0908da41-1781455890.cost.svg",
+    "trace_cmp": "gem5_crc==host_crc"
+  },
+  "note": "quat mul/normalize/rotate/dcm chain x11; fp32+invSqrt"
+}

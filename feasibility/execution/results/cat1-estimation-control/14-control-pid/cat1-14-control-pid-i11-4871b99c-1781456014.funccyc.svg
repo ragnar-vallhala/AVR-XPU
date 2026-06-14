@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="876" height="472" font-family="monospace" font-size="12">
+<rect width="876" height="472" fill="white"/>
+<text x="10" y="22" font-size="15" font-weight="bold">14-control-pid function-mix (cycles) — cat1-14-control-pid-i11-4871b99c-1781456014</text>
+<text x="10" y="42" font-size="11" fill="#555">total 104384 across 22 entries; top 20 = 100.0%</text>
+<text x="230" y="71" text-anchor="end">__addsf3x</text>
+<rect x="236" y="61" width="470" height="13" fill="#4677c8"/>
+<text x="711" y="71">17011  16.3%</text>
+<text x="230" y="91" text-anchor="end">__mulsf3_pse</text>
+<rect x="236" y="81" width="449" height="13" fill="#4677c8"/>
+<text x="690" y="91">16264  15.6%</text>
+<text x="230" y="111" text-anchor="end">main</text>
+<rect x="236" y="101" width="416" height="13" fill="#4677c8"/>
+<text x="657" y="111">15063  14.4%</text>
+<text x="230" y="131" text-anchor="end">__divsf3_pse</text>
+<rect x="236" y="121" width="388" height="13" fill="#4677c8"/>
+<text x="629" y="131">14034  13.4%</text>
+<text x="230" y="151" text-anchor="end">__USER_SIGNATURE_REGION_LENGTH__</text>
+<rect x="236" y="141" width="357" height="13" fill="#4677c8"/>
+<text x="598" y="151">12935  12.4%</text>
+<text x="230" y="171" text-anchor="end">__fp_round</text>
+<rect x="236" y="161" width="203" height="13" fill="#4677c8"/>
+<text x="444" y="171">7345  7.0%</text>
+<text x="230" y="191" text-anchor="end">__fp_splitA</text>
+<rect x="236" y="181" width="154" height="13" fill="#4677c8"/>
+<text x="395" y="191">5564  5.3%</text>
+<text x="230" y="211" text-anchor="end">__fp_cmp</text>
+<rect x="236" y="201" width="119" height="13" fill="#4677c8"/>
+<text x="360" y="211">4323  4.1%</text>
+<text x="230" y="231" text-anchor="end">__fp_split3</text>
+<rect x="236" y="221" width="109" height="13" fill="#4677c8"/>
+<text x="350" y="231">3946  3.8%</text>
+<text x="230" y="251" text-anchor="end">__addsf3</text>
+<rect x="236" y="241" width="66" height="13" fill="#4677c8"/>
+<text x="307" y="251">2376  2.3%</text>
+<text x="230" y="271" text-anchor="end">__mulsf3</text>
+<rect x="236" y="261" width="39" height="13" fill="#4677c8"/>
+<text x="280" y="271">1394  1.3%</text>
+<text x="230" y="291" text-anchor="end">__mulsf3x</text>
+<rect x="236" y="281" width="27" height="13" fill="#4677c8"/>
+<text x="268" y="291">990  0.9%</text>
+<text x="230" y="311" text-anchor="end">__gesf2</text>
+<rect x="236" y="301" width="27" height="13" fill="#4677c8"/>
+<text x="268" y="311">980  0.9%</text>
+<text x="230" y="331" text-anchor="end">pid_step</text>
+<rect x="236" y="321" width="22" height="13" fill="#4677c8"/>
+<text x="263" y="331">792  0.8%</text>
+<text x="230" y="351" text-anchor="end">__do_copy_data</text>
+<rect x="236" y="341" width="15" height="13" fill="#4677c8"/>
+<text x="256" y="351">548  0.5%</text>
+<text x="230" y="371" text-anchor="end">__ltsf2</text>
+<rect x="236" y="361" width="9" height="13" fill="#4677c8"/>
+<text x="250" y="371">330  0.3%</text>
+<text x="230" y="391" text-anchor="end">__divsf3</text>
+<rect x="236" y="381" width="6" height="13" fill="#4677c8"/>
+<text x="247" y="391">231  0.2%</text>
+<text x="230" y="411" text-anchor="end">__divsf3x</text>
+<rect x="236" y="401" width="5" height="13" fill="#4677c8"/>
+<text x="246" y="411">165  0.2%</text>
+<text x="230" y="431" text-anchor="end">__subsf3</text>
+<rect x="236" y="421" width="2" height="13" fill="#4677c8"/>
+<text x="243" y="431">66  0.1%</text>
+<text x="230" y="451" text-anchor="end">__fp_szero</text>
+<rect x="236" y="441" width="1" height="13" fill="#4677c8"/>
+<text x="242" y="451">18  0.0%</text>
+</svg>

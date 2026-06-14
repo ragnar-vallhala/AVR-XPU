@@ -1,0 +1,24 @@
+# AVR per-function CALL count (function entries = op count)
+# columns: name count
+__fp_round 1375
+__fp_splitA 1375
+__fp_split3 1375
+__addsf3x 770
+__addsf3 770
+__mulsf3_pse 605
+__mulsf3x 605
+__mulsf3 605
+__EEPROM_REGION_LENGTH__ 402
+__fp_szero 257
+__subsf3 220
+__fp_zero 54
+quat_mul 11
+__USER_SIGNATURE_REGION_LENGTH__ 11
+quat_rotate 11
+quat_to_dcm 11
+quat_normalize 11
+main 1
+__ctors_end 1
+__heap_end 1
+__do_copy_data 1
+# total 8472

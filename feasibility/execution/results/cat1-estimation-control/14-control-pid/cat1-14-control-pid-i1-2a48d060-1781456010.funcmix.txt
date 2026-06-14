@@ -1,0 +1,24 @@
+# AVR per-function instruction histogram (PC symbol)
+# columns: name count
+main 6921
+__mulsf3_pse 1182
+__divsf3_pse 1116
+__addsf3x 940
+__USER_SIGNATURE_REGION_LENGTH__ 555
+__fp_round 441
+__fp_splitA 429
+__do_copy_data 392
+__fp_cmp 342
+__fp_split3 301
+pid_step 117
+__addsf3 96
+__mulsf3 36
+__mulsf3x 36
+__gesf2 27
+__ltsf2 9
+__divsf3x 6
+__subsf3 6
+__ctors_end 6
+__divsf3 6
+__heap_end 1
+# total 12965
