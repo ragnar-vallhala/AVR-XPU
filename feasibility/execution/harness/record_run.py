@@ -29,7 +29,7 @@ METRIC_KEYS = {
     "system.cpu.commitStats0.numIntInsts": "numIntInsts",
 }
 
-CSV_FIELDS = ["run_id", "created_utc", "category", "workload", "kind", "valid",
+CSV_FIELDS = ["run_id", "created_utc", "category", "workload", "kind", "iters", "valid",
               "simInsts", "numCycles", "cpi", "elf_archived", "elf_sha256",
               "record_json", "stats_file", "opmix_file", "svg_file", "note"]
 
@@ -139,7 +139,7 @@ def main(argv):
     unixt = a.unixtime or int(time.time())
     elf_sha = sha256(a.elf)
     cat_short = a.category.split("-")[0]                       # cat1-estimation-control -> cat1
-    run_id = f"{cat_short}-{a.workload}-{(elf_sha or 'noelf')[:8]}-{unixt}"
+    run_id = f"{cat_short}-{a.workload}-i{a.iters}-{(elf_sha or 'noelf')[:8]}-{unixt}"
 
     match = bool(a.host_crc) and a.host_crc == a.gem5_crc
     exit_ok = a.exit_cause == "AVR Syscall Exit"
@@ -208,7 +208,7 @@ def main(argv):
             w.writeheader()
         w.writerow({
             "run_id": run_id, "created_utc": now, "category": a.category,
-            "workload": a.workload, "kind": a.kind, "valid": valid,
+            "workload": a.workload, "kind": a.kind, "iters": a.iters, "valid": valid,
             "simInsts": metrics.get("simInsts"), "numCycles": metrics.get("numCycles"),
             "cpi": metrics.get("cpi"), "elf_archived": elf_archived, "elf_sha256": elf_sha,
             "record_json": os.path.join(rel, record_json),

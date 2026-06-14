@@ -1,14 +1,14 @@
 {
   "schema": "avrxpu-run/1",
-  "run_id": "cat1-11-ekf-501853ba-1781451428",
+  "run_id": "cat1-11-ekf-i1-501853ba-1781452319",
   "workload": {
     "id": "11-ekf",
     "category": "cat1-estimation-control",
     "kernel": "EKF covariance predict (states 0..12), 24x24 fp32"
   },
   "kind": "measurement",
-  "created_utc": "2026-06-14T15:37:08Z",
-  "unixtime": 1781451428,
+  "created_utc": "2026-06-14T15:51:59Z",
+  "unixtime": 1781452319,
   "platform": {
     "runner": "navrobotec",
     "gem5_git": "c560d40515",
@@ -20,14 +20,14 @@
     "cflags": "-O1 -ffp-contract=off -fno-fast-math",
     "iters": 1,
     "trace": false,
-    "elf": "ekf_avr.elf",
+    "elf": "ekf_avr_i1.elf",
     "elf_sha256": "501853baf36a48dd66cb841e51362c114f59d0da158bf4ae0877e3e3d38b46cd",
     "elf_archived": "cat1-estimation-control/11-ekf/elf/501853baf36a.elf"
   },
   "validation": {
     "host_crc": "26175af3",
     "gem5_crc": "26175af3",
-    "checkpoints": 91,
+    "checkpoints": 0,
     "match": true
   },
   "exit": {
@@ -102,10 +102,10 @@
     }
   },
   "raw": {
-    "stats": "cat1-11-ekf-501853ba-1781451428.stats.txt",
-    "opmix": "cat1-11-ekf-501853ba-1781451428.opmix.txt",
-    "svg": "cat1-11-ekf-501853ba-1781451428.svg",
-    "trace_cmp": "OK 91/91 CRC 26175af3"
+    "stats": "cat1-11-ekf-i1-501853ba-1781452319.stats.txt",
+    "opmix": "cat1-11-ekf-i1-501853ba-1781452319.opmix.txt",
+    "svg": "cat1-11-ekf-i1-501853ba-1781452319.svg",
+    "trace_cmp": "gem5_crc==host_crc (non-trace run)"
   },
-  "note": "EKF predict states 0..12, fp32 softfloat; host+trace bit-exact (91/91)"
+  "note": "EKF predict x1 + startup; fp32 softfloat; CRC-validated vs host"
 }
