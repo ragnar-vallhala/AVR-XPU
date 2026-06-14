@@ -8,12 +8,19 @@ are reproducible and aggregatable. Nothing under `results/` is throwaway.
 ```
 results/
   README.md                         # this spec
+  runs.csv                          # master index: one row per run (elf, result files, artifacts, note)
   <category>/<workload>/
-    <run_id>.json                   # the structured record (schema avrxpu-run/1)
-    <run_id>.stats.txt              # the raw gem5 stats.txt for that run (retained verbatim)
+    <run_id>.json                   # structured record (schema avrxpu-run/1)
+    <run_id>.stats.txt              # raw gem5 stats.txt (retained verbatim)
+    <run_id>.opmix.txt              # raw per-mnemonic op-mix (avr_opmix.txt)
+    <run_id>.svg                    # op-mix histogram (top 20)
+    elf/<elfsha12>.elf              # the ELF — kept ONLY for runs that worked, content-addressed by sha
 ```
 
-`run_id = <workload>_<UTC-timestamp>_<gem5sha8>_i<iters>` — unique per run, sortable, self-describing.
+`run_id = <catShort>-<workload>-<elfsha8>-<unixtime>` (e.g. `cat1-11-ekf-501853ba-1781451428`) — every
+per-run artifact is prefixed with it. **`runs.csv`** is the cross-run master index; columns: run_id,
+created_utc, category, workload, kind, valid, simInsts, numCycles, cpi, elf_archived, elf_sha256,
+record_json, stats_file, opmix_file, svg_file, note (<100 chars).
 
 ## Record schema — `avrxpu-run/1`
 

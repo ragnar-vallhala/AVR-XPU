@@ -1,13 +1,14 @@
 {
   "schema": "avrxpu-run/1",
-  "run_id": "11-ekf_20260614T153145Z_c560d405_i1",
+  "run_id": "cat1-11-ekf-501853ba-1781451428",
   "workload": {
     "id": "11-ekf",
     "category": "cat1-estimation-control",
     "kernel": "EKF covariance predict (states 0..12), 24x24 fp32"
   },
   "kind": "measurement",
-  "created_utc": "2026-06-14T15:31:45Z",
+  "created_utc": "2026-06-14T15:37:08Z",
+  "unixtime": 1781451428,
   "platform": {
     "runner": "navrobotec",
     "gem5_git": "c560d40515",
@@ -39,10 +40,7 @@
     "numCycles": 1022029,
     "cpi": 1.276767,
     "ipc": 0.783228,
-    "numMemRefs": 0,
-    "numIntInsts": 528572,
-    "numLoadInsts": 0,
-    "numStoreInsts": 0
+    "numIntInsts": 528572
   },
   "opmix": {
     "available": true,
@@ -104,9 +102,10 @@
     }
   },
   "raw": {
-    "stats": "11-ekf_20260614T153145Z_c560d405_i1.stats.txt",
-    "opmix": "11-ekf_20260614T153145Z_c560d405_i1.opmix.txt",
+    "stats": "cat1-11-ekf-501853ba-1781451428.stats.txt",
+    "opmix": "cat1-11-ekf-501853ba-1781451428.opmix.txt",
+    "svg": "cat1-11-ekf-501853ba-1781451428.svg",
     "trace_cmp": "OK 91/91 CRC 26175af3"
   },
-  "notes": ""
+  "note": "EKF predict states 0..12, fp32 softfloat; host+trace bit-exact (91/91)"
 }
