@@ -1,0 +1,26 @@
+# Build / run artifacts from the execution harness
+*.o
+*.elf
+*.lst
+*.map
+__pycache__/
+*.pyc
+
+# host harness binaries (no extension) + generated traces (regenerable)
+**/harness/*_host
+**/harness/*_host_trace
+**/harness/host_trace.txt
+**/harness/gem5_trace.txt
+
+# gem5 simulation outputs
+m5out*/
+**/m5out*/
+*.stats.txt
+
+# third-party study PDFs — NOT redistributed in this public repo (docs link them by URL)
+*.pdf
+
+# editor / OS cruft
+.vscode/
+.DS_Store
+*.swp
