@@ -1,0 +1,314 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{longtable}
+\usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\ms}{\texttt{\_\_mulsf3}}
+\newcommand{\as}{\texttt{\_\_addsf3}}
+\newcommand{\ds}{\texttt{\_\_divsf3}}
+
+\title{\textbf{AVR-XPU Feasibility: Workload Characterization, Roofline,\\ and Baseline Comparison}\\[2pt]
+\large An eXtensible AVR-derived datapath for edge flight-control / DSP / inference}
+\author{Ashutosh Vishwakarma}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report presents the measured evidence for the AVR-XPU feasibility study, covering the first three
+gates of the plan: \textbf{(\S1)} workload characterization, \textbf{(\S2)} a roofline / headroom model,
+and \textbf{(\S3)} a baseline comparison against FPU-equipped ARM and RISC-V. Thirteen representative
+flight-control, DSP, and quantized-inference kernels were run cycle-by-cycle on an instrumented gem5 AVR
+model, each validated bit-for-bit against a host reference. The central findings are: (i) on the baseline
+8-bit AVR core every fp kernel is \emph{compute-bound by software floating point}---58--98\,\% of cycles
+are spent in softfloat helper routines, at $\sim$100--170 cycles per fp operation; (ii) the kernels have
+\emph{low arithmetic intensity} (0.08--0.61 ops/byte), so once arithmetic is moved into hardware they
+become \emph{memory-bound}---a hardware fp/MAC datapath yields $\approx$6--16$\times$ but \emph{wide SIMD
+does not help}; and (iii) an FPU-equipped ARM/RISC-V core executes the same fp kernels in
+\textbf{17--76$\times$ fewer instructions} than AVR softfloat, so AVR-XPU cannot win on raw throughput and
+must instead target energy/area for a stripped, domain-specific datapath. All results are reproducible
+from the public repositories and the logged per-run data.
+\end{abstract}
+
+\section{Introduction}
+\textbf{AVR-XPU} is a proposed eXtensible, AVR-derived SIMD/MAC datapath for offloading the compute-heavy
+kernels of a drone flight stack---extended Kalman filtering (sensor fusion), DSP, and lightweight
+quantized inference---validated in gem5 with an FPGA proof-of-concept as the eventual target. Before
+committing to RTL, the feasibility plan demands cheap, falsifiable evidence: \emph{what do the workloads
+actually use, is the idea even compute-bound, and what does it have to beat?} This report answers those
+three questions with measured data, not intuition.
+
+The study is built on a custom gem5 AVR model (functionally and cycle validated against a real
+ATmega328P). For this work the model was hardened and instrumented (\S\ref{sec:method}), and a
+deterministic measurement harness was built so every run is reproducible and bit-exact-validated.
+
+\section{Methodology}\label{sec:method}
+
+\paragraph{Platform and ``eXtensible'' gem5 changes.}
+Kernels run in gem5 syscall-emulation mode on the AVR model. Four changes were made to the model during
+this study, each driven by a measurement need:
+\begin{itemize}
+  \item \textbf{Hard-halt on unknown opcodes.} The port previously \emph{skipped} undecoded instructions
+  (silently corrupting results); it now halts and prints the offending opcode + PC. This made ISA gaps
+  visible rather than masquerading as ``successful'' runs.
+  \item \textbf{ELPM + RAMPZ.} Implementing \code{ELPM} (and aliasing the \code{RAMPZ} I/O register)
+  unblocked workloads whose working set forces a $\geq$8\,KB-SRAM (hence $>$64\,KB-flash) device, whose
+  C runtime copies \code{.data} with \code{ELPM}.
+  \item \textbf{Op-mix instrumentation.} The CPU now emits, at exit, per-mnemonic instruction and cycle
+  histograms, a per-function (PC$\rightarrow$symbol) instruction and cycle histogram, and a per-function
+  \emph{call-count} histogram. These are the raw material for \S1--\S3.
+\end{itemize}
+The model + ISA work live in a gem5 fork (\href{https://github.com/ragnar-vallhala/gem5}{ragnar-vallhala/gem5},
+branch \code{btp}); the harness and all data live in
+\href{https://github.com/ragnar-vallhala/AVR-XPU}{ragnar-vallhala/AVR-XPU}.
+
+\paragraph{Harness and validation oracle.}
+Each kernel is written once and compiled two ways: a \emph{host} reference (x86-64, SSE single precision,
+\code{-ffp-contract=off -fno-fast-math}, i.e.\ IEEE-754 round-to-nearest) and an \emph{AVR} build
+(avr-gcc softfloat, same IEEE-754 semantics). Both emit intermediate-checkpoint traces and a CRC-32 over
+the kernel output. A gem5 run is \emph{valid} only if it halts cleanly \emph{and} its trace/CRC matches
+the host reference bit-for-bit; for the IEEE-754-mandated operations ($+,-,\times,\div,\sqrt{}$) the two
+agree exactly, so the host serves as a deterministic, reproducible oracle even for kernels that do not
+fit real silicon. Per-invocation cost is isolated by a \textbf{two-run difference}: each kernel is run
+$N{=}1$ and $N{=}11$ times, and $(\text{metric}_{11}-\text{metric}_{1})/10$ cancels the fixed
+startup/runtime overhead.
+
+\paragraph{Workloads.}
+Thirteen kernels span three categories (Table~\ref{tab:wl}). Cat-1/2 are single-precision float; Cat-3 is
+int8 (integer MAC + requantize). Standalone microkernels match the scalar form of the reference libraries
+(PX4-ECL, Madgwick, CMSIS-DSP/NN). Build flag \code{-O1} throughout.
+
+\begin{table}[h]\centering\small
+\caption{The thirteen workloads.}\label{tab:wl}
+\begin{tabular}{@{}llp{7.3cm}@{}}
+\toprule
+ID & data & kernel \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{Cat-1 --- estimation \& control (fp32)}}\\
+11-ekf & fp32 & PX4-ECL EKF covariance predict, 24-state ($P'{=}FPF^{\!\top}{+}Q$) \\
+12-ahrs & fp32 & Madgwick 6-axis IMU attitude update (quaternion, fast inverse sqrt) \\
+13-quaternion & fp32 & quaternion glue: Hamilton product, normalize, rotate-vector, DCM \\
+14-control-pid & fp32 & cascaded rate-PID step (P+I anti-windup+D, feedforward, saturation) \\
+15-control-allocation & fp32 & quad-X control allocation: $\text{clamp}(B^{+}\!\cdot\!\text{setpoint})$ \\
+\multicolumn{3}{@{}l}{\textit{Cat-2 --- DSP (fp32)}}\\
+21-fir & fp32 & FIR filter, 16 taps, 48-sample block \\
+22-biquad & fp32 & biquad IIR cascade, Direct-Form-1, 4 sections \\
+23-fft & fp32 & radix-2 DIT FFT, $N{=}64$, precomputed twiddles \\
+24-matmul & fp32 & dense matrix multiply $8\times8\times8$ \\
+25-dotprod & fp32 & vector dot product, $N{=}64$ \\
+\multicolumn{3}{@{}l}{\textit{Cat-3 --- inference (int8)}}\\
+31-conv2d & int8 & quantized 2D convolution ($2{\to}4$ ch, $8\times8$, $3\times3$) + requantize \\
+32-fc & int8 & quantized fully-connected / GEMM ($32{\to}16$) + requantize \\
+33-maxpool & int8 & $2\times2$ max pooling, 4 channels $16\times16$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All 13 kernels ($\times$ two iteration counts $=$ 26 runs) validated bit-exact against the host reference;
+no run hit an unresolved ISA gap.
+
+\section{(\S1) Workload Characterization}
+
+Table~\ref{tab:s1} gives the gross per-run cost on the AVR model. The headline is the cost of software
+floating point: kernels with little ``real'' work nonetheless retire hundreds of thousands of
+instructions.
+
+\begin{table}[h]\centering\small
+\caption{Per-run cost on the baseline AVR model ($N{=}1$, includes startup).}\label{tab:s1}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+workload & sim.\ insts & cycles & CPI & comp.\ insts/byte \\
+\midrule
+11-ekf & 800\,482 & 1\,022\,029 & 1.28 & 32.7 \\
+12-ahrs & 17\,133 & 23\,257 & 1.36 & 20.8 \\
+13-quaternion & 16\,185 & 21\,512 & 1.33 & 14.5 \\
+14-control-pid & 12\,965 & 15\,962 & 1.23 & 14.3 \\
+15-control-allocation & 9\,429 & 11\,708 & 1.24 & 12.6 \\
+21-fir & 183\,221 & 249\,283 & 1.36 & 19.6 \\
+22-biquad & 204\,933 & 290\,201 & 1.42 & 9.2 \\
+23-fft & 243\,947 & 346\,192 & 1.42 & 8.0 \\
+24-matmul & 145\,892 & 198\,214 & 1.36 & 23.1 \\
+25-dotprod & 47\,737 & 63\,560 & 1.33 & 27.4 \\
+31-conv2d & 242\,732 & 333\,196 & 1.37 & 10.7 \\
+32-fc & 131\,653 & 176\,021 & 1.34 & 21.9 \\
+33-maxpool & 249\,071 & 308\,217 & 1.24 & 62.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{What they use most (EKF worked example).}
+The per-mnemonic op-mix of the EKF predict is dominated by multi-byte integer add/subtract-with-carry,
+branches, and shifts---i.e.\ software floating point on a core with no FPU:
+\code{adc} 142\,234, \code{cpc} 68\,584, \code{brbs} 65\,976, \code{brbc} 59\,117, \code{add} 57\,168,
+\code{eor} 37\,066, \code{ror} 34\,764, $\dots$ (53 distinct mnemonics totalling the 800\,482 instructions).
+Attributing instructions to functions makes the cause explicit: \textbf{82.1\,\% of EKF cycles are spent
+in compiler arithmetic-helper routines}. Decomposing the runtime cost as
+$\text{cost}=\text{calls}\times\text{cycles/call}$ (Table~\ref{tab:cost}) shows where the time goes and,
+crucially, the \emph{operation counts} a hardware datapath would replace.
+
+\begin{table}[h]\centering\small
+\caption{EKF predict: runtime cost by function (one predict + startup).}\label{tab:cost}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+function & cost (cycles) & calls & cycles/call \\
+\midrule
+\ds\ (fp divide) & 233\,106 & 552 & 422.3 \\
+\code{main} (the kernel itself) & 147\,140 & 1 & 147\,140 \\
+\ms\ (fp multiply) & 112\,826 & 1\,601 & 70.5 \\
+\as\ (fp add) & 98\,802 & 1\,673 & 59.1 \\
+\code{\_\_floatsisf} (int$\rightarrow$float) & 65\,111 & 1\,152 & 56.5 \\
+\code{\_\_udivmodhi4} (integer divide, used by fp) & 53\,888 & 8\,832 & 6.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Two observations generalize across the suite: \textbf{(a)} fp work is overwhelmingly softfloat,
+and \textbf{(b)} the \emph{mix} of fp ops differs by kernel---the EKF is \emph{division}-heavy (552
+divides at $\sim$422 cycles each, the single largest cost), whereas Madgwick AHRS, by design, uses a fast
+inverse-square-root bit trick and issues \emph{zero} divisions and is multiply-bound. The int8 kernels
+contain \emph{no} softfloat at all---their hot op is an integer multiply (\code{\_\_umulhisi3}). This
+fp-divide / fp-multiply / int8-MAC split is the primary input to ISA design (\S6).
+
+\section{(\S2) Roofline / Headroom Model}
+
+To turn the characterization into a design verdict we plot each kernel on a roofline. Per-invocation
+operation count (softfloat calls for fp kernels), bytes moved (load/store count), and cycles are taken
+from the two-run difference. The model assumes AVR data-memory bandwidth
+$\text{BW}=0.5$~byte/cycle (load/store $\approx$2 cycles/byte), a hardware-arithmetic compute roof of $W$
+ops/cycle at SIMD width $W$, and a memory$\leftrightarrow$compute ridge at intensity $I=2W$ ops/byte.
+
+\begin{table}[h]\centering\small
+\caption{Roofline (per invocation, i11$-$i1). \emph{helper\%} $=$ cycles in arithmetic-helper routines;
+\emph{sp@W} $=$ attainable speedup over softfloat with a HW datapath at SIMD width $W$.}\label{tab:roof}
+\begin{tabular}{@{}llrrrrrrr@{}}
+\toprule
+workload & kind & ops & bytes & cyc/op & $I$ (op/B) & helper\% & ridge\,$W$ & sp@1 / @4 / @8 \\
+\midrule
+12-ahrs & fp & 181 & 680 & 123.9 & 0.27 & 98.2 & 0.1 & 16.5 / 16.5 / 16.5 \\
+25-dotprod & fp & 131 & 528 & 131.1 & 0.25 & 83.8 & 0.1 & 16.3 / 16.3 / 16.3 \\
+24-matmul & fp & 1034 & 4644 & 130.7 & 0.22 & 83.5 & 0.1 & 14.6 / 14.6 / 14.6 \\
+11-ekf & fp & 2500 & 12788 & 110.5 & 0.20 & 97.8 & 0.1 & 10.8 / 10.8 / 10.8 \\
+21-fir & fp & 1586 & 8254 & 137.5 & 0.19 & 79.0 & 0.1 & 13.2 / 13.2 / 13.2 \\
+13-quaternion & fp & 145 & 806 & 103.9 & 0.18 & 85.0 & 0.1 & 9.3 / 9.3 / 9.3 \\
+22-biquad & fp & 2162 & 19316 & 123.2 & 0.11 & 85.8 & 0.1 & 6.9 / 6.9 / 6.9 \\
+23-fft & fp & 2754 & 25292 & 109.9 & 0.11 & 77.1 & 0.1 & 6.0 / 6.0 / 6.0 \\
+15-control-alloc & fp & 36 & 332 & 157.3 & 0.11 & 77.5 & 0.1 & 8.5 / 8.5 / 8.5 \\
+14-control-pid & fp & 51 & 603 & 173.4 & 0.08 & 90.9 & 0.0 & 7.3 / 7.3 / 7.3 \\
+32-fc & int8 & 2048 & 3338 & 20.0 & 0.61 & 58.5 & 0.3 & 6.1 / 6.1 / 6.1 \\
+31-conv2d & int8 & 10368 & 19738 & 24.1 & 0.53 & 59.1 & 0.3 & 6.3 / 6.3 / 6.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Verdict.} Three conclusions follow, and they are nuanced:
+\begin{enumerate}
+  \item \textbf{The baseline is compute(softfloat)-bound.} 58--98\,\% of cycles are in arithmetic helpers
+  at $\sim$100--170 cycles per fp op, so a scalar hardware fp/MAC datapath removes that tax for
+  $\approx$\,\textbf{6--16$\times$} (the \emph{sp@1} column).
+  \item \textbf{But arithmetic intensity is low} (0.08--0.61 ops/byte), far left of the scalar ridge
+  ($I{=}2$). Hence once arithmetic is in hardware the kernels become \emph{memory-bound}: every
+  $\text{ridge}\,W<1$, and \emph{sp@1 $=$ sp@4 $=$ sp@8}---\textbf{wide SIMD does not help}; the ceiling is
+  memory bandwidth, not compute.
+  \item \textbf{Design implication:} prioritize a hardware fp/MAC datapath \emph{plus} memory bandwidth
+  (wider/multi-byte loads, a local scratchpad) over many vector lanes. The classic ``memory-bound kills
+  SIMD'' kill-criterion \emph{does} bite---it kills wide SIMD, but \emph{not} the hardware-arithmetic
+  datapath, which still delivers 6--16$\times$.
+\end{enumerate}
+\emph{Caveat:} \texttt{bytes} is the load/store count; for the big-expression EKF some are register spills,
+so per-kernel intensity is approximate, but the order-of-magnitude ($I\ll$ ridge) result is robust across
+all kernels. \code{33-maxpool} is excluded (no MAC---pure int8 compares).
+
+\section{(\S3) Baseline Comparison: ARM and RISC-V with hardware FP}
+
+To quantify what the AVR-XPU must beat, the \emph{same} C kernels were cross-compiled for AArch64
+(NEON+VFP) and RV64GC (scalar F/D) and run on gem5's multi-ISA build. Because all three ISAs implement
+IEEE-754, the host CRC validates AVR, ARM, \emph{and} RISC-V identically (the \texttt{crc} column).
+Per-invocation instruction counts (i11$-$i1) are model-independent and directly comparable; cycle counts
+are not (different CPU models), so we report instructions.
+
+\begin{table}[h]\centering\small
+\caption{AVR softfloat vs.\ ARM64 / RISC-V with hardware FP: instructions \emph{per invocation}.
+\emph{fp(A/Ar/Rv)} $=$ fp ops issued on each (softfloat \emph{calls} for AVR; fp \emph{instructions} for
+ARM/RISC-V). All CRC-validated.}\label{tab:base}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+workload & AVR insts & ARM insts & RV insts & AVR/ARM & AVR/RV & fp A/Ar/Rv \\
+\midrule
+12-ahrs & 16\,368 & 216 & 245 & \textbf{75.9$\times$} & 66.8$\times$ & 181/184/220 \\
+11-ekf & 195\,970 & 4\,398 & 4\,600 & \textbf{44.6$\times$} & 42.6$\times$ & 2500/2161/3998 \\
+13-quaternion & 10\,396 & 272 & 278 & 38.2$\times$ & 37.4$\times$ & 145/130/230 \\
+14-control-pid & 6\,445 & 184 & 182 & 35.0$\times$ & 35.3$\times$ & 51/96/128 \\
+22-biquad & 187\,133 & 5\,583 & 5\,340 & 33.5$\times$ & 35.0$\times$ & 2162/1970/4517 \\
+25-dotprod & 12\,520 & 463 & 466 & 27.0$\times$ & 26.9$\times$ & 131/131/263 \\
+23-fft & 210\,060 & 9\,045 & 10\,386 & 23.2$\times$ & 20.2$\times$ & 2754/2178/4805 \\
+24-matmul & 97\,756 & 4\,643 & 4\,133 & 21.1$\times$ & 23.7$\times$ & 1034/1034/2197 \\
+15-control-alloc & 4\,043 & 215 & 223 & 18.8$\times$ & 18.1$\times$ & 36/47/99 \\
+21-fir & 159\,353 & 9\,423 & 8\,653 & 16.9$\times$ & 18.4$\times$ & 1586/2354/3821 \\
+\midrule
+32-fc & 26\,579 & 3\,308 & 3\,808 & 8.0$\times$ & 7.0$\times$ & 0/0/0 \\
+31-conv2d & 172\,350 & 23\,003 & 29\,080 & 7.5$\times$ & 5.9$\times$ & 0/0/0 \\
+33-maxpool & 5\,201 & 4\,878 & 8\,128 & 1.1$\times$ & 0.6$\times$ & 0/0/0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Findings.}
+\begin{itemize}
+  \item On the fp kernels, an FPU-equipped ARM needs \textbf{17--76$\times$ fewer instructions} than AVR
+  softfloat (RISC-V similar, slightly less because gcc auto-vectorizes for NEON but not for scalar RV64).
+  This is the FPU advantage stated plainly: AVR turns each fp op into a $\sim$50--170-instruction softfloat
+  call; ARM/RISC-V do it in $\approx$1.
+  \item The \textbf{int8 kernels show only 6--8$\times$} (all three issue integer MACs; AVR's penalty there
+  is its 8-bit width, not softfloat), and \textbf{\code{maxpool} $\approx$1$\times$}---a pure-compare
+  kernel where AVR is competitive and 64-bit RISC-V is actually \emph{worse} (0.6$\times$).
+  \item \textbf{Implication.} AVR-XPU cannot beat an FPU-equipped ARM/RISC-V on raw fp instruction count.
+  Per the plan, its case must therefore rest on \emph{energy/area} for a stripped, domain-specific
+  datapath, not on throughput.
+\end{itemize}
+
+\section{Synthesis and Implications for ISA Design (\S4)}
+The three gates compose into a coherent, data-backed steer:
+\begin{itemize}
+  \item \textbf{There is a real opportunity} (\S2: 6--16$\times$ from removing softfloat) but
+  \textbf{a hard ceiling} (\S2: low intensity $\Rightarrow$ memory-bound $\Rightarrow$ wide SIMD wasted;
+  \S3: an off-the-shelf FPU already captures 17--76$\times$).
+  \item The defensible target is therefore a \textbf{minimal hardware fp/int8 MAC datapath fed by good
+  memory bandwidth} (wide/multi-byte loads, local scratchpad), \textbf{not} a wide vector machine---and
+  the competitive axis is \textbf{energy/area per operation}, not peak FLOPS.
+  \item The op-mix prioritizes which primitives matter: a fused \textbf{fp multiply-add} and a
+  \textbf{fp divide / reciprocal} (the EKF's single largest cost) for Cat-1/2, and a packed
+  \textbf{int8 MAC + requantize} for Cat-3.
+\end{itemize}
+
+\section{Threats to Validity}
+\begin{itemize}
+  \item gem5's ARM/RISC-V models are application-class (A-profile with NEON), not Cortex-M; instruction
+  counts are robust, but cycle/energy comparison needs real M-profile hardware---the planned next step
+  (Cortex-M boards with the DWT cycle counter and current measurement).
+  \item Cycle figures use each model's timing; cross-ISA cycle comparison is therefore avoided in favour
+  of instruction counts. AVR cycle costs follow the instruction-set manual (validated against ATmega328P).
+  \item Arithmetic intensity uses the softfloat-inclusive load/store count; the conclusion (intensity
+  $\ll$ ridge) is order-of-magnitude robust but per-kernel values are approximate.
+  \item Microkernels match the \emph{scalar} reference forms; vectorized library variants (Helium/MVE,
+  RVV) would change ARM/RISC-V counts but not the qualitative gap. The primary M55+Helium baseline (\S3)
+  remains to be added from cited/measured data.
+\end{itemize}
+
+\section*{Reproducibility}
+All kernels, harness, instrumentation, per-run logs (op/cycle/function/call histograms, the runtime-cost
+charts), and the analysis scripts (\code{roofline.py}, \code{compare\_isa.py}) are in
+\href{https://github.com/ragnar-vallhala/AVR-XPU}{github.com/ragnar-vallhala/AVR-XPU} under
+\code{feasibility/execution/}; the gem5 model is at
+\href{https://github.com/ragnar-vallhala/gem5}{github.com/ragnar-vallhala/gem5} (branch \code{btp}).
+Each run is recorded as a JSON record (schema \code{avrxpu-run/1}) indexed by \code{results/runs.csv}, with
+the producing ELF archived by content hash. Charts referenced above are emitted as SVG alongside the data
+(\code{results/roofline.svg}, \code{results/baseline\_compare.svg}, and per-run op-mix histograms).
+
+\end{document}
