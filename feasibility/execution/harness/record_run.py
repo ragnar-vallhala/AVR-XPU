@@ -77,23 +77,27 @@ def sha256(path):
     return h.hexdigest()
 
 
-def make_svg(histo, title, top=20):
+def make_svg(histo, title, total, top=20):
     items = list(histo.items())[:top]
     if not items:
         return None
+    total = total or sum(c for _, c in items)
     maxc = max(c for _, c in items)
-    rowh, padt, padl, barmax = 20, 44, 96, 560
-    w, h = padl + barmax + 130, padt + rowh * len(items) + 14
+    shown = sum(c for _, c in items)
+    rowh, padt, padl, barmax = 20, 58, 96, 500
+    w, h = padl + barmax + 180, padt + rowh * len(items) + 14
     o = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
          f'font-family="monospace" font-size="12">',
          f'<rect width="{w}" height="{h}" fill="white"/>',
-         f'<text x="10" y="24" font-size="15" font-weight="bold">{title}</text>']
+         f'<text x="10" y="22" font-size="15" font-weight="bold">{title}</text>',
+         f'<text x="10" y="42" font-size="11" fill="#555">total {total} insts across '
+         f'{len(histo)} mnemonics; top {len(items)} = {100.0*shown/total:.1f}% of all</text>']
     for i, (mn, c) in enumerate(items):
         y = padt + i * rowh
         bw = max(1, round(barmax * c / maxc))
         o.append(f'<text x="{padl-6}" y="{y+13}" text-anchor="end">{mn}</text>')
         o.append(f'<rect x="{padl}" y="{y+3}" width="{bw}" height="{rowh-7}" fill="#4677c8"/>')
-        o.append(f'<text x="{padl+bw+5}" y="{y+13}">{c}</text>')
+        o.append(f'<text x="{padl+bw+5}" y="{y+13}">{c}  {100.0*c/total:.1f}%</text>')
     o.append("</svg>")
     return "\n".join(o)
 
@@ -152,7 +156,8 @@ def main(argv):
     shutil.copyfile(a.stats, os.path.join(outdir, stats_file))
     if histo:
         shutil.copyfile(opmix_path, os.path.join(outdir, opmix_file))
-        svg = make_svg(histo, f"{a.workload} op-mix (top 20) — {run_id}")
+        svg = make_svg(histo, f"{a.workload} op-mix (top 20) — {run_id}",
+                       total=sum(histo.values()))
         with open(os.path.join(outdir, svg_file), "w") as f:
             f.write(svg + "\n")
 
