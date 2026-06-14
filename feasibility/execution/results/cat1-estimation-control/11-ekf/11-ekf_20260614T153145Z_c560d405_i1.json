@@ -1,0 +1,112 @@
+{
+  "schema": "avrxpu-run/1",
+  "run_id": "11-ekf_20260614T153145Z_c560d405_i1",
+  "workload": {
+    "id": "11-ekf",
+    "category": "cat1-estimation-control",
+    "kernel": "EKF covariance predict (states 0..12), 24x24 fp32"
+  },
+  "kind": "measurement",
+  "created_utc": "2026-06-14T15:31:45Z",
+  "platform": {
+    "runner": "navrobotec",
+    "gem5_git": "c560d40515",
+    "gem5_dirty": false
+  },
+  "build": {
+    "mcu": "atmega1284p",
+    "toolchain": "avr-gcc 7.3.0",
+    "cflags": "-O1 -ffp-contract=off -fno-fast-math",
+    "iters": 1,
+    "trace": false,
+    "elf": "ekf_avr.elf",
+    "elf_sha256": "501853baf36a48dd66cb841e51362c114f59d0da158bf4ae0877e3e3d38b46cd",
+    "elf_archived": "cat1-estimation-control/11-ekf/elf/501853baf36a.elf"
+  },
+  "validation": {
+    "host_crc": "26175af3",
+    "gem5_crc": "26175af3",
+    "checkpoints": 91,
+    "match": true
+  },
+  "exit": {
+    "cause": "AVR Syscall Exit",
+    "ok": true
+  },
+  "metrics": {
+    "simInsts": 800482,
+    "simOps": 800482,
+    "numCycles": 1022029,
+    "cpi": 1.276767,
+    "ipc": 0.783228,
+    "numMemRefs": 0,
+    "numIntInsts": 528572,
+    "numLoadInsts": 0,
+    "numStoreInsts": 0
+  },
+  "opmix": {
+    "available": true,
+    "total": 800482,
+    "classes": {
+      "adc": 142234,
+      "cpc": 68584,
+      "brbs": 65976,
+      "brbc": 59117,
+      "add": 57168,
+      "eor": 37066,
+      "ror_inst": 34764,
+      "cp": 28218,
+      "sbc": 26613,
+      "movw": 26143,
+      "sbci": 22450,
+      "cpi": 16797,
+      "mov": 15951,
+      "dec": 15393,
+      "ret": 15391,
+      "andi": 14568,
+      "call": 13736,
+      "mul": 13427,
+      "ldi": 12774,
+      "com": 12376,
+      "subi": 12356,
+      "sub": 11489,
+      "lsr": 9486,
+      "ldd_y": 8428,
+      "and": 7901,
+      "inc": 7563,
+      "bst": 5532,
+      "st_x_postinc": 5202,
+      "sbrc": 4930,
+      "st_z_postinc": 4608,
+      "jmp": 4137,
+      "bld": 3305,
+      "neg": 2912,
+      "rjmp": 2532,
+      "or": 2477,
+      "std_y": 1906,
+      "rcall": 1656,
+      "ld_x_postinc": 1096,
+      "adiw": 807,
+      "ldd_z": 776,
+      "ld_z_postinc": 737,
+      "sbiw": 647,
+      "std_z": 576,
+      "ld_x": 244,
+      "sbrs": 178,
+      "elpm_z_postinc": 116,
+      "st_x": 38,
+      "bclr": 26,
+      "push": 24,
+      "pop": 22,
+      "out_instr": 13,
+      "cpse": 9,
+      "in_instr": 7
+    }
+  },
+  "raw": {
+    "stats": "11-ekf_20260614T153145Z_c560d405_i1.stats.txt",
+    "opmix": "11-ekf_20260614T153145Z_c560d405_i1.opmix.txt",
+    "trace_cmp": "OK 91/91 CRC 26175af3"
+  },
+  "notes": ""
+}

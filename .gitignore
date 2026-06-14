@@ -23,3 +23,6 @@ m5out*/
 .vscode/
 .DS_Store
 *.swp
+
+# ...but DO keep archived working ELFs under results/ (referenced by sha in run records)
+!**/results/**/*.elf
