@@ -1,0 +1,365 @@
+{
+  "schema": "avrxpu-run/1",
+  "run_id": "cat1-12-ahrs-i11-ceaa8cd4-1781455747",
+  "workload": {
+    "id": "12-ahrs",
+    "category": "cat1-estimation-control",
+    "kernel": "Madgwick AHRS 6-axis IMU update (quaternion, invSqrt)"
+  },
+  "kind": "measurement",
+  "created_utc": "2026-06-14T16:49:07Z",
+  "unixtime": 1781455747,
+  "platform": {
+    "runner": "navrobotec",
+    "gem5_git": "adac491a9e"
+  },
+  "build": {
+    "mcu": "atmega1284p",
+    "toolchain": "avr-gcc 7.3.0",
+    "cflags": "-O1 -ffp-contract=off -fno-fast-math",
+    "iters": 11,
+    "trace": false,
+    "elf": "ahrs_avr_i11.elf",
+    "elf_sha256": "ceaa8cd481897a4aa1e4af8cf7da16fcefcdedf7a77153181e393157bd8a5589",
+    "elf_archived": "cat1-estimation-control/12-ahrs/elf/ceaa8cd48189.elf"
+  },
+  "validation": {
+    "host_crc": "519db59f",
+    "gem5_crc": "519db59f",
+    "checkpoints": 0,
+    "match": true
+  },
+  "exit": {
+    "cause": "AVR Syscall Exit",
+    "ok": true
+  },
+  "metrics": {
+    "simInsts": 180818,
+    "simOps": 180818,
+    "numCycles": 247431,
+    "cpi": 1.368398,
+    "ipc": 0.730782,
+    "mem_insts": 7587,
+    "bytes_moved": 7587,
+    "compute_insts": 173231,
+    "insts_per_byte": 22.833
+  },
+  "opmix": {
+    "available": true,
+    "total": 180818,
+    "classes": {
+      "adc": 25103,
+      "add": 20040,
+      "brbs": 17623,
+      "ror_inst": 11320,
+      "mul": 11026,
+      "eor": 9993,
+      "brbc": 8884,
+      "mov": 7414,
+      "movw": 6936,
+      "sbci": 6024,
+      "cpi": 5823,
+      "call": 5248,
+      "ret": 5247,
+      "ldd_y": 4972,
+      "cpc": 3821,
+      "subi": 3761,
+      "inc": 3265,
+      "lsr": 2790,
+      "ldi": 2576,
+      "or": 1797,
+      "jmp": 1792,
+      "bst": 1738,
+      "sbrc": 1738,
+      "and": 1651,
+      "std_y": 1600,
+      "cp": 1400,
+      "sbc": 1324,
+      "bld": 1152,
+      "andi": 648,
+      "rjmp": 602,
+      "sub": 594,
+      "com": 487,
+      "sbiw": 419,
+      "adiw": 408,
+      "push": 376,
+      "pop": 198,
+      "ld_x_postinc": 132,
+      "neg": 128,
+      "dec": 120,
+      "out_instr": 106,
+      "st_x_postinc": 94,
+      "std_z": 88,
+      "sbrs": 80,
+      "in_instr": 58,
+      "ld_x": 44,
+      "bclr": 41,
+      "asr": 33,
+      "elpm_z_postinc": 28,
+      "ld_z_postinc": 25,
+      "st_x": 22,
+      "cpse": 20,
+      "ldd_z": 8,
+      "bset": 1
+    }
+  },
+  "opmix_cycles": {
+    "available": true,
+    "total": 247412,
+    "classes": {
+      "adc": 25103,
+      "mul": 22052,
+      "brbs": 21104,
+      "call": 20992,
+      "ret": 20988,
+      "add": 20040,
+      "brbc": 15536,
+      "ror_inst": 11320,
+      "eor": 9993,
+      "ldd_y": 9944,
+      "mov": 7414,
+      "movw": 6936,
+      "sbci": 6024,
+      "cpi": 5823,
+      "jmp": 5376,
+      "cpc": 3821,
+      "subi": 3761,
+      "inc": 3265,
+      "std_y": 3200,
+      "sbrc": 3069,
+      "lsr": 2790,
+      "ldi": 2576,
+      "or": 1797,
+      "bst": 1738,
+      "and": 1651,
+      "cp": 1400,
+      "sbc": 1324,
+      "rjmp": 1204,
+      "bld": 1152,
+      "sbiw": 838,
+      "adiw": 816,
+      "push": 752,
+      "andi": 648,
+      "sub": 594,
+      "com": 487,
+      "pop": 396,
+      "ld_x_postinc": 264,
+      "st_x_postinc": 188,
+      "std_z": 176,
+      "neg": 128,
+      "sbrs": 125,
+      "dec": 120,
+      "out_instr": 106,
+      "ld_x": 88,
+      "in_instr": 58,
+      "ld_z_postinc": 50,
+      "st_x": 44,
+      "bclr": 41,
+      "asr": 33,
+      "elpm_z_postinc": 28,
+      "cpse": 22,
+      "ldd_z": 16,
+      "bset": 1
+    }
+  },
+  "funcmix": {
+    "available": true,
+    "total": 180818,
+    "classes": {
+      "__mulsf3_pse": 74251,
+      "__EEPROM_REGION_LENGTH__": 26478,
+      "__fp_round": 16335,
+      "__USER_SIGNATURE_REGION_LENGTH__": 14421,
+      "__fp_splitA": 14360,
+      "__fp_split3": 12453,
+      "__addsf3x": 7123,
+      "main": 5207,
+      "__mulsf3": 2380,
+      "__addsf3": 2376,
+      "__mulsf3x": 2288,
+      "ahrs_update_imu": 2057,
+      "__fp_cmp": 319,
+      "__fp_szero": 318,
+      "__subsf3": 253,
+      "__do_copy_data": 152,
+      "__ltsf2": 33,
+      "__fp_zero": 7,
+      "__ctors_end": 6,
+      "__heap_end": 1
+    }
+  },
+  "funcmix_cycles": {
+    "available": true,
+    "total": 247412,
+    "classes": {
+      "__mulsf3_pse": 91366,
+      "__EEPROM_REGION_LENGTH__": 31525,
+      "__USER_SIGNATURE_REGION_LENGTH__": 26213,
+      "__fp_round": 25025,
+      "__fp_splitA": 19738,
+      "__fp_split3": 13844,
+      "__addsf3x": 9585,
+      "__mulsf3": 8192,
+      "main": 5753,
+      "__mulsf3x": 5720,
+      "__addsf3": 5346,
+      "ahrs_update_imu": 3674,
+      "__fp_szero": 477,
+      "__fp_cmp": 363,
+      "__subsf3": 253,
+      "__do_copy_data": 212,
+      "__ltsf2": 110,
+      "__fp_zero": 7,
+      "__ctors_end": 6,
+      "__heap_end": 3
+    }
+  },
+  "funccalls": {
+    "available": true,
+    "total": 10345,
+    "classes": {
+      "__fp_split3": 1738,
+      "__fp_round": 1738,
+      "__fp_splitA": 1738,
+      "__mulsf3_pse": 1144,
+      "__mulsf3x": 1144,
+      "__mulsf3": 1144,
+      "__addsf3x": 594,
+      "__addsf3": 594,
+      "__subsf3": 253,
+      "__EEPROM_REGION_LENGTH__": 150,
+      "__fp_szero": 53,
+      "ahrs_update_imu": 11,
+      "__USER_SIGNATURE_REGION_LENGTH__": 11,
+      "__ltsf2": 11,
+      "__fp_cmp": 11,
+      "__fp_zero": 7,
+      "main": 1,
+      "__ctors_end": 1,
+      "__heap_end": 1,
+      "__do_copy_data": 1
+    }
+  },
+  "runtime_cost": {
+    "available": true,
+    "total_cycles": 247412,
+    "by_function": {
+      "__mulsf3_pse": {
+        "cost_cycles": 91366,
+        "calls": 1144,
+        "cyc_per_call": 79.87
+      },
+      "__EEPROM_REGION_LENGTH__": {
+        "cost_cycles": 31525,
+        "calls": 150,
+        "cyc_per_call": 210.17
+      },
+      "__USER_SIGNATURE_REGION_LENGTH__": {
+        "cost_cycles": 26213,
+        "calls": 11,
+        "cyc_per_call": 2383.0
+      },
+      "__fp_round": {
+        "cost_cycles": 25025,
+        "calls": 1738,
+        "cyc_per_call": 14.4
+      },
+      "__fp_splitA": {
+        "cost_cycles": 19738,
+        "calls": 1738,
+        "cyc_per_call": 11.36
+      },
+      "__fp_split3": {
+        "cost_cycles": 13844,
+        "calls": 1738,
+        "cyc_per_call": 7.97
+      },
+      "__addsf3x": {
+        "cost_cycles": 9585,
+        "calls": 594,
+        "cyc_per_call": 16.14
+      },
+      "__mulsf3": {
+        "cost_cycles": 8192,
+        "calls": 1144,
+        "cyc_per_call": 7.16
+      },
+      "main": {
+        "cost_cycles": 5753,
+        "calls": 1,
+        "cyc_per_call": 5753.0
+      },
+      "__mulsf3x": {
+        "cost_cycles": 5720,
+        "calls": 1144,
+        "cyc_per_call": 5.0
+      },
+      "__addsf3": {
+        "cost_cycles": 5346,
+        "calls": 594,
+        "cyc_per_call": 9.0
+      },
+      "ahrs_update_imu": {
+        "cost_cycles": 3674,
+        "calls": 11,
+        "cyc_per_call": 334.0
+      },
+      "__fp_szero": {
+        "cost_cycles": 477,
+        "calls": 53,
+        "cyc_per_call": 9.0
+      },
+      "__fp_cmp": {
+        "cost_cycles": 363,
+        "calls": 11,
+        "cyc_per_call": 33.0
+      },
+      "__subsf3": {
+        "cost_cycles": 253,
+        "calls": 253,
+        "cyc_per_call": 1.0
+      },
+      "__do_copy_data": {
+        "cost_cycles": 212,
+        "calls": 1,
+        "cyc_per_call": 212.0
+      },
+      "__ltsf2": {
+        "cost_cycles": 110,
+        "calls": 11,
+        "cyc_per_call": 10.0
+      },
+      "__fp_zero": {
+        "cost_cycles": 7,
+        "calls": 7,
+        "cyc_per_call": 1.0
+      },
+      "__ctors_end": {
+        "cost_cycles": 6,
+        "calls": 1,
+        "cyc_per_call": 6.0
+      },
+      "__heap_end": {
+        "cost_cycles": 3,
+        "calls": 1,
+        "cyc_per_call": 3.0
+      }
+    }
+  },
+  "raw": {
+    "stats": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.stats.txt",
+    "opmix": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.opmix.txt",
+    "opmix_svg": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.opmix.svg",
+    "cycles": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.cycles.txt",
+    "cycles_svg": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.cycles.svg",
+    "funcmix": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.funcmix.txt",
+    "funcmix_svg": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.funcmix.svg",
+    "funccyc": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.funccyc.txt",
+    "funccyc_svg": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.funccyc.svg",
+    "funccalls": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.funccalls.txt",
+    "funccalls_svg": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.funccalls.svg",
+    "cost_svg": "cat1-12-ahrs-i11-ceaa8cd4-1781455747.cost.svg",
+    "trace_cmp": "gem5_crc==host_crc"
+  },
+  "note": "Madgwick IMU update x11; fp32+invSqrt; compute-bound contrast to EKF"
+}

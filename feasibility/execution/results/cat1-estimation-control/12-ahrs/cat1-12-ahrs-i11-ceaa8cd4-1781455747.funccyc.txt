@@ -1,0 +1,23 @@
+# AVR per-function CYCLE histogram (PC symbol)
+# columns: name count
+__mulsf3_pse 91366
+__EEPROM_REGION_LENGTH__ 31525
+__USER_SIGNATURE_REGION_LENGTH__ 26213
+__fp_round 25025
+__fp_splitA 19738
+__fp_split3 13844
+__addsf3x 9585
+__mulsf3 8192
+main 5753
+__mulsf3x 5720
+__addsf3 5346
+ahrs_update_imu 3674
+__fp_szero 477
+__fp_cmp 363
+__subsf3 253
+__do_copy_data 212
+__ltsf2 110
+__fp_zero 7
+__ctors_end 6
+__heap_end 3
+# total 247412

@@ -1,0 +1,363 @@
+{
+  "schema": "avrxpu-run/1",
+  "run_id": "cat1-12-ahrs-i1-21959139-1781455743",
+  "workload": {
+    "id": "12-ahrs",
+    "category": "cat1-estimation-control",
+    "kernel": "Madgwick AHRS 6-axis IMU update (quaternion, invSqrt)"
+  },
+  "kind": "measurement",
+  "created_utc": "2026-06-14T16:49:03Z",
+  "unixtime": 1781455743,
+  "platform": {
+    "runner": "navrobotec",
+    "gem5_git": "adac491a9e"
+  },
+  "build": {
+    "mcu": "atmega1284p",
+    "toolchain": "avr-gcc 7.3.0",
+    "cflags": "-O1 -ffp-contract=off -fno-fast-math",
+    "iters": 1,
+    "trace": false,
+    "elf": "ahrs_avr_i1.elf",
+    "elf_sha256": "2195913942e8aa2b9a4cbc87b308f213d72e7fce5f69c1c63b7955887f37d7b2",
+    "elf_archived": "cat1-estimation-control/12-ahrs/elf/2195913942e8.elf"
+  },
+  "validation": {
+    "host_crc": "d281f6b1",
+    "gem5_crc": "d281f6b1",
+    "checkpoints": 0,
+    "match": true
+  },
+  "exit": {
+    "cause": "AVR Syscall Exit",
+    "ok": true
+  },
+  "metrics": {
+    "simInsts": 17133,
+    "simOps": 17133,
+    "numCycles": 23257,
+    "cpi": 1.357439,
+    "ipc": 0.736681,
+    "mem_insts": 787,
+    "bytes_moved": 787,
+    "compute_insts": 16346,
+    "insts_per_byte": 20.77
+  },
+  "opmix": {
+    "available": true,
+    "total": 17133,
+    "classes": {
+      "eor": 1662,
+      "adc": 1599,
+      "add": 1363,
+      "ror_inst": 1296,
+      "brbs": 1249,
+      "brbc": 865,
+      "movw": 858,
+      "andi": 648,
+      "sbci": 627,
+      "mul": 626,
+      "cpc": 561,
+      "mov": 481,
+      "call": 478,
+      "ret": 477,
+      "ldd_y": 452,
+      "com": 417,
+      "cpi": 383,
+      "subi": 350,
+      "lsr": 327,
+      "ldi": 255,
+      "jmp": 212,
+      "cp": 204,
+      "inc": 189,
+      "std_y": 160,
+      "sbrc": 158,
+      "bst": 158,
+      "rjmp": 143,
+      "neg": 128,
+      "dec": 120,
+      "bld": 111,
+      "and": 95,
+      "or": 87,
+      "sbc": 47,
+      "sub": 43,
+      "sbiw": 39,
+      "adiw": 38,
+      "push": 36,
+      "st_x_postinc": 34,
+      "elpm_z_postinc": 28,
+      "ld_z_postinc": 25,
+      "pop": 18,
+      "out_instr": 16,
+      "ld_x_postinc": 12,
+      "bclr": 11,
+      "cpse": 10,
+      "in_instr": 8,
+      "std_z": 8,
+      "ldd_z": 8,
+      "ld_x": 4,
+      "sbrs": 4,
+      "asr": 3,
+      "st_x": 2
+    }
+  },
+  "opmix_cycles": {
+    "available": true,
+    "total": 23238,
+    "classes": {
+      "call": 1912,
+      "ret": 1908,
+      "eor": 1662,
+      "brbs": 1605,
+      "adc": 1599,
+      "brbc": 1585,
+      "add": 1363,
+      "ror_inst": 1296,
+      "mul": 1252,
+      "ldd_y": 904,
+      "movw": 858,
+      "andi": 648,
+      "jmp": 636,
+      "sbci": 627,
+      "cpc": 561,
+      "mov": 481,
+      "com": 417,
+      "cpi": 383,
+      "subi": 350,
+      "lsr": 327,
+      "std_y": 320,
+      "sbrc": 289,
+      "rjmp": 286,
+      "ldi": 255,
+      "cp": 204,
+      "inc": 189,
+      "bst": 158,
+      "neg": 128,
+      "dec": 120,
+      "bld": 111,
+      "and": 95,
+      "or": 87,
+      "sbiw": 78,
+      "adiw": 76,
+      "push": 72,
+      "st_x_postinc": 68,
+      "ld_z_postinc": 50,
+      "sbc": 47,
+      "sub": 43,
+      "pop": 36,
+      "elpm_z_postinc": 28,
+      "ld_x_postinc": 24,
+      "out_instr": 16,
+      "std_z": 16,
+      "ldd_z": 16,
+      "cpse": 12,
+      "bclr": 11,
+      "ld_x": 8,
+      "in_instr": 8,
+      "sbrs": 6,
+      "st_x": 4,
+      "asr": 3
+    }
+  },
+  "funcmix": {
+    "available": true,
+    "total": 17133,
+    "classes": {
+      "main": 4607,
+      "__mulsf3_pse": 4095,
+      "__fp_splitA": 1720,
+      "__USER_SIGNATURE_REGION_LENGTH__": 1294,
+      "__fp_round": 1278,
+      "__addsf3x": 1058,
+      "__fp_split3": 1013,
+      "__EEPROM_REGION_LENGTH__": 601,
+      "__fp_szero": 318,
+      "__mulsf3": 300,
+      "__addsf3": 216,
+      "__mulsf3x": 208,
+      "ahrs_update_imu": 204,
+      "__do_copy_data": 152,
+      "__fp_cmp": 29,
+      "__subsf3": 23,
+      "__fp_zero": 7,
+      "__ctors_end": 6,
+      "__ltsf2": 3,
+      "__heap_end": 1
+    }
+  },
+  "funcmix_cycles": {
+    "available": true,
+    "total": 23238,
+    "classes": {
+      "__mulsf3_pse": 5094,
+      "main": 4943,
+      "__fp_splitA": 2358,
+      "__USER_SIGNATURE_REGION_LENGTH__": 2353,
+      "__fp_round": 2068,
+      "__addsf3x": 1336,
+      "__fp_split3": 1204,
+      "__mulsf3": 912,
+      "__EEPROM_REGION_LENGTH__": 829,
+      "__mulsf3x": 520,
+      "__addsf3": 486,
+      "__fp_szero": 477,
+      "ahrs_update_imu": 364,
+      "__do_copy_data": 212,
+      "__fp_cmp": 33,
+      "__subsf3": 23,
+      "__ltsf2": 10,
+      "__fp_zero": 7,
+      "__ctors_end": 6,
+      "__heap_end": 3
+    }
+  },
+  "funccalls": {
+    "available": true,
+    "total": 1013,
+    "classes": {
+      "__fp_split3": 158,
+      "__fp_round": 158,
+      "__fp_splitA": 158,
+      "__mulsf3_pse": 104,
+      "__mulsf3": 104,
+      "__mulsf3x": 104,
+      "__addsf3x": 54,
+      "__addsf3": 54,
+      "__fp_szero": 53,
+      "__EEPROM_REGION_LENGTH__": 28,
+      "__subsf3": 23,
+      "__fp_zero": 7,
+      "main": 1,
+      "ahrs_update_imu": 1,
+      "__ctors_end": 1,
+      "__do_copy_data": 1,
+      "__heap_end": 1,
+      "__USER_SIGNATURE_REGION_LENGTH__": 1,
+      "__ltsf2": 1,
+      "__fp_cmp": 1
+    }
+  },
+  "runtime_cost": {
+    "available": true,
+    "total_cycles": 23238,
+    "by_function": {
+      "__mulsf3_pse": {
+        "cost_cycles": 5094,
+        "calls": 104,
+        "cyc_per_call": 48.98
+      },
+      "main": {
+        "cost_cycles": 4943,
+        "calls": 1,
+        "cyc_per_call": 4943.0
+      },
+      "__fp_splitA": {
+        "cost_cycles": 2358,
+        "calls": 158,
+        "cyc_per_call": 14.92
+      },
+      "__USER_SIGNATURE_REGION_LENGTH__": {
+        "cost_cycles": 2353,
+        "calls": 1,
+        "cyc_per_call": 2353.0
+      },
+      "__fp_round": {
+        "cost_cycles": 2068,
+        "calls": 158,
+        "cyc_per_call": 13.09
+      },
+      "__addsf3x": {
+        "cost_cycles": 1336,
+        "calls": 54,
+        "cyc_per_call": 24.74
+      },
+      "__fp_split3": {
+        "cost_cycles": 1204,
+        "calls": 158,
+        "cyc_per_call": 7.62
+      },
+      "__mulsf3": {
+        "cost_cycles": 912,
+        "calls": 104,
+        "cyc_per_call": 8.77
+      },
+      "__EEPROM_REGION_LENGTH__": {
+        "cost_cycles": 829,
+        "calls": 28,
+        "cyc_per_call": 29.61
+      },
+      "__mulsf3x": {
+        "cost_cycles": 520,
+        "calls": 104,
+        "cyc_per_call": 5.0
+      },
+      "__addsf3": {
+        "cost_cycles": 486,
+        "calls": 54,
+        "cyc_per_call": 9.0
+      },
+      "__fp_szero": {
+        "cost_cycles": 477,
+        "calls": 53,
+        "cyc_per_call": 9.0
+      },
+      "ahrs_update_imu": {
+        "cost_cycles": 364,
+        "calls": 1,
+        "cyc_per_call": 364.0
+      },
+      "__do_copy_data": {
+        "cost_cycles": 212,
+        "calls": 1,
+        "cyc_per_call": 212.0
+      },
+      "__fp_cmp": {
+        "cost_cycles": 33,
+        "calls": 1,
+        "cyc_per_call": 33.0
+      },
+      "__subsf3": {
+        "cost_cycles": 23,
+        "calls": 23,
+        "cyc_per_call": 1.0
+      },
+      "__ltsf2": {
+        "cost_cycles": 10,
+        "calls": 1,
+        "cyc_per_call": 10.0
+      },
+      "__fp_zero": {
+        "cost_cycles": 7,
+        "calls": 7,
+        "cyc_per_call": 1.0
+      },
+      "__ctors_end": {
+        "cost_cycles": 6,
+        "calls": 1,
+        "cyc_per_call": 6.0
+      },
+      "__heap_end": {
+        "cost_cycles": 3,
+        "calls": 1,
+        "cyc_per_call": 3.0
+      }
+    }
+  },
+  "raw": {
+    "stats": "cat1-12-ahrs-i1-21959139-1781455743.stats.txt",
+    "opmix": "cat1-12-ahrs-i1-21959139-1781455743.opmix.txt",
+    "opmix_svg": "cat1-12-ahrs-i1-21959139-1781455743.opmix.svg",
+    "cycles": "cat1-12-ahrs-i1-21959139-1781455743.cycles.txt",
+    "cycles_svg": "cat1-12-ahrs-i1-21959139-1781455743.cycles.svg",
+    "funcmix": "cat1-12-ahrs-i1-21959139-1781455743.funcmix.txt",
+    "funcmix_svg": "cat1-12-ahrs-i1-21959139-1781455743.funcmix.svg",
+    "funccyc": "cat1-12-ahrs-i1-21959139-1781455743.funccyc.txt",
+    "funccyc_svg": "cat1-12-ahrs-i1-21959139-1781455743.funccyc.svg",
+    "funccalls": "cat1-12-ahrs-i1-21959139-1781455743.funccalls.txt",
+    "funccalls_svg": "cat1-12-ahrs-i1-21959139-1781455743.funccalls.svg",
+    "cost_svg": "cat1-12-ahrs-i1-21959139-1781455743.cost.svg",
+    "trace_cmp": "gem5_crc==host_crc"
+  },
+  "note": "Madgwick IMU update x1; fp32+invSqrt; compute-bound contrast to EKF"
+}
