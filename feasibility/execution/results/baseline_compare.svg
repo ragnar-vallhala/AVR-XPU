@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="418" font-family="monospace" font-size="11">
+<rect width="880" height="418" fill="white"/>
+<text x="14" y="22" font-size="14" font-weight="bold">Instruction-count reduction vs AVR softfloat (per invocation) — HW-FP ISAs</text>
+<text x="194" y="53" text-anchor="end">12-ahrs</text>
+<rect x="200" y="40" width="590" height="9" fill="#4677c8"/>
+<text x="794" y="48" fill="#4677c8">76x</text>
+<rect x="200" y="51" width="520" height="9" fill="#b5651d"/>
+<text x="724" y="59" fill="#b5651d">67x</text>
+<text x="194" y="79" text-anchor="end">11-ekf</text>
+<rect x="200" y="66" width="347" height="9" fill="#4677c8"/>
+<text x="551" y="74" fill="#4677c8">45x</text>
+<rect x="200" y="77" width="331" height="9" fill="#b5651d"/>
+<text x="535" y="85" fill="#b5651d">43x</text>
+<text x="194" y="105" text-anchor="end">13-quaternion</text>
+<rect x="200" y="92" width="297" height="9" fill="#4677c8"/>
+<text x="501" y="100" fill="#4677c8">38x</text>
+<rect x="200" y="103" width="291" height="9" fill="#b5651d"/>
+<text x="495" y="111" fill="#b5651d">37x</text>
+<text x="194" y="131" text-anchor="end">14-control-pid</text>
+<rect x="200" y="118" width="272" height="9" fill="#4677c8"/>
+<text x="476" y="126" fill="#4677c8">35x</text>
+<rect x="200" y="129" width="275" height="9" fill="#b5651d"/>
+<text x="479" y="137" fill="#b5651d">35x</text>
+<text x="194" y="157" text-anchor="end">22-biquad</text>
+<rect x="200" y="144" width="261" height="9" fill="#4677c8"/>
+<text x="465" y="152" fill="#4677c8">34x</text>
+<rect x="200" y="155" width="273" height="9" fill="#b5651d"/>
+<text x="477" y="163" fill="#b5651d">35x</text>
+<text x="194" y="183" text-anchor="end">25-dotprod</text>
+<rect x="200" y="170" width="210" height="9" fill="#4677c8"/>
+<text x="414" y="178" fill="#4677c8">27x</text>
+<rect x="200" y="181" width="209" height="9" fill="#b5651d"/>
+<text x="413" y="189" fill="#b5651d">27x</text>
+<text x="194" y="209" text-anchor="end">23-fft</text>
+<rect x="200" y="196" width="181" height="9" fill="#4677c8"/>
+<text x="385" y="204" fill="#4677c8">23x</text>
+<rect x="200" y="207" width="157" height="9" fill="#b5651d"/>
+<text x="361" y="215" fill="#b5651d">20x</text>
+<text x="194" y="235" text-anchor="end">24-matmul</text>
+<rect x="200" y="222" width="164" height="9" fill="#4677c8"/>
+<text x="368" y="230" fill="#4677c8">21x</text>
+<rect x="200" y="233" width="184" height="9" fill="#b5651d"/>
+<text x="388" y="241" fill="#b5651d">24x</text>
+<text x="194" y="261" text-anchor="end">15-control-allocation</text>
+<rect x="200" y="248" width="146" height="9" fill="#4677c8"/>
+<text x="350" y="256" fill="#4677c8">19x</text>
+<rect x="200" y="259" width="141" height="9" fill="#b5651d"/>
+<text x="345" y="267" fill="#b5651d">18x</text>
+<text x="194" y="287" text-anchor="end">21-fir</text>
+<rect x="200" y="274" width="132" height="9" fill="#4677c8"/>
+<text x="336" y="282" fill="#4677c8">17x</text>
+<rect x="200" y="285" width="143" height="9" fill="#b5651d"/>
+<text x="347" y="293" fill="#b5651d">18x</text>
+<text x="194" y="313" text-anchor="end">32-fc</text>
+<rect x="200" y="300" width="62" height="9" fill="#4677c8"/>
+<text x="266" y="308" fill="#4677c8">8x</text>
+<rect x="200" y="311" width="54" height="9" fill="#b5651d"/>
+<text x="258" y="319" fill="#b5651d">7x</text>
+<text x="194" y="339" text-anchor="end">31-conv2d</text>
+<rect x="200" y="326" width="58" height="9" fill="#4677c8"/>
+<text x="262" y="334" fill="#4677c8">7x</text>
+<rect x="200" y="337" width="46" height="9" fill="#b5651d"/>
+<text x="250" y="345" fill="#b5651d">6x</text>
+<text x="194" y="365" text-anchor="end">33-maxpool</text>
+<rect x="200" y="352" width="8" height="9" fill="#4677c8"/>
+<text x="212" y="360" fill="#4677c8">1x</text>
+<rect x="200" y="363" width="5" height="9" fill="#b5651d"/>
+<text x="209" y="371" fill="#b5651d">1x</text>
+<text x="200" y="406" font-size="10" fill="#777">blue = AVR/ARM64,  orange = AVR/RISC-V  (higher = AVR softfloat needs that many more instructions)</text>
+</svg>
