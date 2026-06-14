@@ -1,0 +1,44 @@
+# AVR per-mnemonic CYCLE histogram (cycle-weighted op-mix)
+# columns: name count
+adc 67716
+brbc 47613
+brbs 33284
+cpc 19344
+cp 18794
+dec 17528
+eor 14617
+andi 10250
+movw 8754
+call 8200
+com 8196
+ret 8196
+sbci 7278
+ror_inst 6480
+subi 4215
+sbrc 4096
+st_x_postinc 3128
+rjmp 2822
+sub 2201
+lsr 2160
+neg 2048
+st_z_postinc 2048
+mov 1814
+ldi 1489
+cpi 1318
+ldd_z 1042
+ldd_y 1024
+bst 1024
+adiw 576
+ld_z_postinc 530
+sbc 160
+add 132
+push 32
+pop 32
+elpm_z_postinc 28
+cpse 11
+inc 8
+out_instr 4
+jmp 3
+std_z 2
+and 1
+# total 308198

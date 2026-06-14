@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="896" height="472" font-family="monospace" font-size="12">
+<rect width="896" height="472" fill="white"/>
+<text x="10" y="22" font-size="15" font-weight="bold">32-fc runtime cost (calls x cyc/call) — cat3-32-fc-i11-b9106e3e-1781457080</text>
+<text x="10" y="42" font-size="11" fill="#555">cost = calls × cyc/call (= total cycles); total 585432; top 20 = 100.0%</text>
+<text x="230" y="71" text-anchor="end">run_workload</text>
+<rect x="236" y="61" width="420" height="13" fill="#b5651d"/>
+<text x="661" y="71">201637  (1x201637)  34.4%</text>
+<text x="230" y="91" text-anchor="end">__umulhisi3</text>
+<rect x="236" y="81" width="258" height="13" fill="#b5651d"/>
+<text x="499" y="91">123904  (5632x22)  21.2%</text>
+<text x="230" y="111" text-anchor="end">__mulhisi3</text>
+<rect x="236" y="101" width="123" height="13" fill="#b5651d"/>
+<text x="364" y="111">59070  (5632x10)  10.1%</text>
+<text x="230" y="131" text-anchor="end">__udivmodhi4_loop</text>
+<rect x="236" y="121" width="110" height="13" fill="#b5651d"/>
+<text x="351" y="131">52764  (8704x6)  9.0%</text>
+<text x="230" y="151" text-anchor="end">__udivmodhi4_ep</text>
+<rect x="236" y="141" width="104" height="13" fill="#b5651d"/>
+<text x="345" y="151">50048  (9248x5)  8.5%</text>
+<text x="230" y="171" text-anchor="end">__usmulhisi3_tail</text>
+<rect x="236" y="161" width="81" height="13" fill="#b5651d"/>
+<text x="322" y="171">38720  (5632x7)  6.6%</text>
+<text x="230" y="191" text-anchor="end">__ashldi3</text>
+<rect x="236" y="181" width="43" height="13" fill="#b5651d"/>
+<text x="284" y="191">20416  (176x116)  3.5%</text>
+<text x="230" y="211" text-anchor="end">__lshrdi3</text>
+<rect x="236" y="201" width="33" height="13" fill="#b5651d"/>
+<text x="274" y="211">15664  (176x89)  2.7%</text>
+<text x="230" y="231" text-anchor="end">_div</text>
+<rect x="236" y="221" width="16" height="13" fill="#b5651d"/>
+<text x="257" y="231">7616  (544x14)  1.3%</text>
+<text x="230" y="251" text-anchor="end">__cmpdi2_s8</text>
+<rect x="236" y="241" width="11" height="13" fill="#b5651d"/>
+<text x="252" y="251">5280  (352x15)  0.9%</text>
+<text x="230" y="271" text-anchor="end">__udivmodhi4</text>
+<rect x="236" y="261" width="6" height="13" fill="#b5651d"/>
+<text x="247" y="271">2720  (544x5)  0.5%</text>
+<text x="230" y="291" text-anchor="end">.do_clear_bss_start</text>
+<rect x="236" y="281" width="5" height="13" fill="#b5651d"/>
+<text x="246" y="291">2503  (625x4)  0.4%</text>
+<text x="230" y="311" text-anchor="end">__divmodhi4_exit</text>
+<rect x="236" y="301" width="5" height="13" fill="#b5651d"/>
+<text x="246" y="311">2176  (544x4)  0.4%</text>
+<text x="230" y="331" text-anchor="end">.do_clear_bss_loop</text>
+<rect x="236" y="321" width="3" height="13" fill="#b5651d"/>
+<text x="244" y="331">1248  (624x2)  0.2%</text>
+<text x="230" y="351" text-anchor="end">main</text>
+<rect x="236" y="341" width="2" height="13" fill="#b5651d"/>
+<text x="243" y="351">1064  (1x1064)  0.2%</text>
+<text x="230" y="371" text-anchor="end">__ashrdi3</text>
+<rect x="236" y="361" width="1" height="13" fill="#b5651d"/>
+<text x="242" y="371">352  (176x2)  0.1%</text>
+<text x="230" y="391" text-anchor="end">__do_copy_data</text>
+<rect x="236" y="381" width="1" height="13" fill="#b5651d"/>
+<text x="242" y="391">208  (1x208)  0.0%</text>
+<text x="230" y="411" text-anchor="end">__USER_SIGNATURE_REGION_LENGTH__</text>
+<rect x="236" y="401" width="1" height="13" fill="#b5651d"/>
+<text x="242" y="411">28  (1x28)  0.0%</text>
+<text x="230" y="431" text-anchor="end">__ctors_end</text>
+<rect x="236" y="421" width="1" height="13" fill="#b5651d"/>
+<text x="242" y="431">6  (1x6)  0.0%</text>
+<text x="230" y="451" text-anchor="end">__do_clear_bss</text>
+<rect x="236" y="441" width="1" height="13" fill="#b5651d"/>
+<text x="242" y="451">5  (1x5)  0.0%</text>
+</svg>

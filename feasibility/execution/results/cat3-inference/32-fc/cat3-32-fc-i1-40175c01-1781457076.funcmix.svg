@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="876" height="472" font-family="monospace" font-size="12">
+<rect width="876" height="472" fill="white"/>
+<text x="10" y="22" font-size="15" font-weight="bold">32-fc function-mix (insts) — cat3-32-fc-i1-40175c01-1781457076</text>
+<text x="10" y="42" font-size="11" fill="#555">total 131653 across 21 entries; top 20 = 100.0%</text>
+<text x="230" y="71" text-anchor="end">__udivmodhi4_loop</text>
+<rect x="236" y="61" width="470" height="13" fill="#4677c8"/>
+<text x="711" y="71">44600  33.9%</text>
+<text x="230" y="91" text-anchor="end">__udivmodhi4_ep</text>
+<rect x="236" y="81" width="418" height="13" fill="#4677c8"/>
+<text x="659" y="91">39712  30.2%</text>
+<text x="230" y="111" text-anchor="end">run_workload</text>
+<rect x="236" y="101" width="232" height="13" fill="#4677c8"/>
+<text x="473" y="111">22036  16.7%</text>
+<text x="230" y="131" text-anchor="end">__umulhisi3</text>
+<rect x="236" y="121" width="81" height="13" fill="#4677c8"/>
+<text x="322" y="131">7680  5.8%</text>
+<text x="230" y="151" text-anchor="end">_div</text>
+<rect x="236" y="141" width="40" height="13" fill="#4677c8"/>
+<text x="281" y="151">3808  2.9%</text>
+<text x="230" y="171" text-anchor="end">__mulhisi3</text>
+<rect x="236" y="161" width="27" height="13" fill="#4677c8"/>
+<text x="268" y="171">2548  1.9%</text>
+<text x="230" y="191" text-anchor="end">__udivmodhi4</text>
+<rect x="236" y="181" width="23" height="13" fill="#4677c8"/>
+<text x="264" y="191">2176  1.7%</text>
+<text x="230" y="211" text-anchor="end">.do_clear_bss_start</text>
+<rect x="236" y="201" width="20" height="13" fill="#4677c8"/>
+<text x="261" y="211">1876  1.4%</text>
+<text x="230" y="231" text-anchor="end">__usmulhisi3_tail</text>
+<rect x="236" y="221" width="18" height="13" fill="#4677c8"/>
+<text x="259" y="231">1664  1.3%</text>
+<text x="230" y="251" text-anchor="end">__ashldi3</text>
+<rect x="236" y="241" width="17" height="13" fill="#4677c8"/>
+<text x="258" y="251">1648  1.3%</text>
+<text x="230" y="271" text-anchor="end">__lshrdi3</text>
+<rect x="236" y="261" width="13" height="13" fill="#4677c8"/>
+<text x="254" y="271">1264  1.0%</text>
+<text x="230" y="291" text-anchor="end">main</text>
+<rect x="236" y="281" width="10" height="13" fill="#4677c8"/>
+<text x="251" y="291">908  0.7%</text>
+<text x="230" y="311" text-anchor="end">.do_clear_bss_loop</text>
+<rect x="236" y="301" width="7" height="13" fill="#4677c8"/>
+<text x="248" y="311">624  0.5%</text>
+<text x="230" y="331" text-anchor="end">__divmodhi4_exit</text>
+<rect x="236" y="321" width="6" height="13" fill="#4677c8"/>
+<text x="247" y="331">544  0.4%</text>
+<text x="230" y="351" text-anchor="end">__cmpdi2_s8</text>
+<rect x="236" y="341" width="4" height="13" fill="#4677c8"/>
+<text x="245" y="351">368  0.3%</text>
+<text x="230" y="371" text-anchor="end">__do_copy_data</text>
+<rect x="236" y="361" width="2" height="13" fill="#4677c8"/>
+<text x="243" y="371">151  0.1%</text>
+<text x="230" y="391" text-anchor="end">__ashrdi3</text>
+<rect x="236" y="381" width="1" height="13" fill="#4677c8"/>
+<text x="242" y="391">22  0.0%</text>
+<text x="230" y="411" text-anchor="end">__USER_SIGNATURE_REGION_LENGTH__</text>
+<rect x="236" y="401" width="1" height="13" fill="#4677c8"/>
+<text x="242" y="411">13  0.0%</text>
+<text x="230" y="431" text-anchor="end">__ctors_end</text>
+<rect x="236" y="421" width="1" height="13" fill="#4677c8"/>
+<text x="242" y="431">6  0.0%</text>
+<text x="230" y="451" text-anchor="end">__do_clear_bss</text>
+<rect x="236" y="441" width="1" height="13" fill="#4677c8"/>
+<text x="242" y="451">4  0.0%</text>
+</svg>

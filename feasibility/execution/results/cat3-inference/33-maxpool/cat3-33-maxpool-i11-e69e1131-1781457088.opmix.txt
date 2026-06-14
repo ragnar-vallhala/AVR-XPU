@@ -1,0 +1,44 @@
+# AVR per-mnemonic instruction histogram (op-mix)
+# columns: name count
+adc 67716
+brbc 32414
+cp 29404
+cpc 22274
+brbs 19943
+dec 17528
+eor 14617
+movw 12054
+andi 10270
+mov 9374
+com 8196
+sbci 7658
+ror_inst 6480
+ldd_z 5651
+ldd_y 5632
+subi 4605
+st_x_postinc 4124
+adiw 3168
+sub 2201
+lsr 2160
+call 2050
+ret 2049
+sbrc 2048
+neg 2048
+rjmp 1841
+ldi 1509
+cpi 1318
+bst 1024
+st_z_postinc 1024
+ld_z_postinc 265
+sbc 160
+add 132
+inc 48
+elpm_z_postinc 28
+pop 16
+push 16
+and 11
+std_z 11
+cpse 9
+out_instr 4
+jmp 1
+# total 301081

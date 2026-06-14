@@ -1,0 +1,285 @@
+{
+  "schema": "avrxpu-run/1",
+  "run_id": "cat3-33-maxpool-i11-e69e1131-1781457088",
+  "workload": {
+    "id": "33-maxpool",
+    "category": "cat3-inference",
+    "kernel": "int8 2x2 max pooling (4ch 16x16)"
+  },
+  "kind": "measurement",
+  "created_utc": "2026-06-14T17:11:28Z",
+  "unixtime": 1781457088,
+  "platform": {
+    "runner": "navrobotec",
+    "gem5_git": "adac491a9e"
+  },
+  "build": {
+    "mcu": "atmega1284p",
+    "toolchain": "avr-gcc 7.3.0",
+    "cflags": "-O1 -ffp-contract=off -fno-fast-math",
+    "iters": 11,
+    "trace": false,
+    "elf": "maxpool_avr_i11.elf",
+    "elf_sha256": "e69e11312fb53e39ec4a4436874be57f781d432094fa3e383d66ed9d786313cf",
+    "elf_archived": "cat3-inference/33-maxpool/elf/e69e11312fb5.elf"
+  },
+  "validation": {
+    "host_crc": "7d5a0023",
+    "gem5_crc": "7d5a0023",
+    "checkpoints": 0,
+    "match": true
+  },
+  "exit": {
+    "cause": "AVR Syscall Exit",
+    "ok": true
+  },
+  "metrics": {
+    "simInsts": 301081,
+    "simOps": 301081,
+    "numCycles": 379407,
+    "cpi": 1.260149,
+    "ipc": 0.793557,
+    "mem_insts": 16767,
+    "bytes_moved": 16767,
+    "compute_insts": 284314,
+    "insts_per_byte": 16.957
+  },
+  "opmix": {
+    "available": true,
+    "total": 301081,
+    "classes": {
+      "adc": 67716,
+      "brbc": 32414,
+      "cp": 29404,
+      "cpc": 22274,
+      "brbs": 19943,
+      "dec": 17528,
+      "eor": 14617,
+      "movw": 12054,
+      "andi": 10270,
+      "mov": 9374,
+      "com": 8196,
+      "sbci": 7658,
+      "ror_inst": 6480,
+      "ldd_z": 5651,
+      "ldd_y": 5632,
+      "subi": 4605,
+      "st_x_postinc": 4124,
+      "adiw": 3168,
+      "sub": 2201,
+      "lsr": 2160,
+      "call": 2050,
+      "ret": 2049,
+      "sbrc": 2048,
+      "neg": 2048,
+      "rjmp": 1841,
+      "ldi": 1509,
+      "cpi": 1318,
+      "bst": 1024,
+      "st_z_postinc": 1024,
+      "ld_z_postinc": 265,
+      "sbc": 160,
+      "add": 132,
+      "inc": 48,
+      "elpm_z_postinc": 28,
+      "pop": 16,
+      "push": 16,
+      "and": 11,
+      "std_z": 11,
+      "cpse": 9,
+      "out_instr": 4,
+      "jmp": 1
+    }
+  },
+  "opmix_cycles": {
+    "available": true,
+    "total": 379388,
+    "classes": {
+      "adc": 67716,
+      "brbc": 57973,
+      "brbs": 36594,
+      "cp": 29404,
+      "cpc": 22274,
+      "dec": 17528,
+      "eor": 14617,
+      "movw": 12054,
+      "ldd_z": 11302,
+      "ldd_y": 11264,
+      "andi": 10270,
+      "mov": 9374,
+      "st_x_postinc": 8248,
+      "call": 8200,
+      "ret": 8196,
+      "com": 8196,
+      "sbci": 7658,
+      "ror_inst": 6480,
+      "adiw": 6336,
+      "subi": 4605,
+      "sbrc": 4096,
+      "rjmp": 3682,
+      "sub": 2201,
+      "lsr": 2160,
+      "st_z_postinc": 2048,
+      "neg": 2048,
+      "ldi": 1509,
+      "cpi": 1318,
+      "bst": 1024,
+      "ld_z_postinc": 530,
+      "sbc": 160,
+      "add": 132,
+      "inc": 48,
+      "pop": 32,
+      "push": 32,
+      "elpm_z_postinc": 28,
+      "std_z": 22,
+      "and": 11,
+      "cpse": 11,
+      "out_instr": 4,
+      "jmp": 3
+    }
+  },
+  "funcmix": {
+    "available": true,
+    "total": 301081,
+    "classes": {
+      "run_workload": 125631,
+      "__udivmodhi4_loop": 82216,
+      "__udivmodhi4_ep": 74752,
+      "_div": 7168,
+      "__udivmodhi4": 4096,
+      ".do_clear_bss_start": 3844,
+      ".do_clear_bss_loop": 1280,
+      "__divmodhi4_exit": 1024,
+      "main": 908,
+      "__do_copy_data": 151,
+      "__ctors_end": 6,
+      "__do_clear_bss": 4,
+      "__heap_end": 1
+    }
+  },
+  "funcmix_cycles": {
+    "available": true,
+    "total": 379388,
+    "classes": {
+      "run_workload": 154203,
+      "__udivmodhi4_loop": 98452,
+      "__udivmodhi4_ep": 94208,
+      "_div": 14336,
+      ".do_clear_bss_start": 5127,
+      "__udivmodhi4": 5120,
+      "__divmodhi4_exit": 4096,
+      ".do_clear_bss_loop": 2560,
+      "main": 1064,
+      "__do_copy_data": 208,
+      "__ctors_end": 6,
+      "__do_clear_bss": 5,
+      "__heap_end": 3
+    }
+  },
+  "funccalls": {
+    "available": true,
+    "total": 39431,
+    "classes": {
+      "__udivmodhi4_ep": 17408,
+      "__udivmodhi4_loop": 16384,
+      ".do_clear_bss_start": 1281,
+      ".do_clear_bss_loop": 1280,
+      "__divmodhi4_exit": 1024,
+      "__udivmodhi4": 1024,
+      "_div": 1024,
+      "main": 1,
+      "__do_clear_bss": 1,
+      "__do_copy_data": 1,
+      "run_workload": 1,
+      "__ctors_end": 1,
+      "__heap_end": 1
+    }
+  },
+  "runtime_cost": {
+    "available": true,
+    "total_cycles": 379388,
+    "by_function": {
+      "run_workload": {
+        "cost_cycles": 154203,
+        "calls": 1,
+        "cyc_per_call": 154203.0
+      },
+      "__udivmodhi4_loop": {
+        "cost_cycles": 98452,
+        "calls": 16384,
+        "cyc_per_call": 6.01
+      },
+      "__udivmodhi4_ep": {
+        "cost_cycles": 94208,
+        "calls": 17408,
+        "cyc_per_call": 5.41
+      },
+      "_div": {
+        "cost_cycles": 14336,
+        "calls": 1024,
+        "cyc_per_call": 14.0
+      },
+      ".do_clear_bss_start": {
+        "cost_cycles": 5127,
+        "calls": 1281,
+        "cyc_per_call": 4.0
+      },
+      "__udivmodhi4": {
+        "cost_cycles": 5120,
+        "calls": 1024,
+        "cyc_per_call": 5.0
+      },
+      "__divmodhi4_exit": {
+        "cost_cycles": 4096,
+        "calls": 1024,
+        "cyc_per_call": 4.0
+      },
+      ".do_clear_bss_loop": {
+        "cost_cycles": 2560,
+        "calls": 1280,
+        "cyc_per_call": 2.0
+      },
+      "main": {
+        "cost_cycles": 1064,
+        "calls": 1,
+        "cyc_per_call": 1064.0
+      },
+      "__do_copy_data": {
+        "cost_cycles": 208,
+        "calls": 1,
+        "cyc_per_call": 208.0
+      },
+      "__ctors_end": {
+        "cost_cycles": 6,
+        "calls": 1,
+        "cyc_per_call": 6.0
+      },
+      "__do_clear_bss": {
+        "cost_cycles": 5,
+        "calls": 1,
+        "cyc_per_call": 5.0
+      },
+      "__heap_end": {
+        "cost_cycles": 3,
+        "calls": 1,
+        "cyc_per_call": 3.0
+      }
+    }
+  },
+  "raw": {
+    "stats": "cat3-33-maxpool-i11-e69e1131-1781457088.stats.txt",
+    "opmix": "cat3-33-maxpool-i11-e69e1131-1781457088.opmix.txt",
+    "opmix_svg": "cat3-33-maxpool-i11-e69e1131-1781457088.opmix.svg",
+    "cycles": "cat3-33-maxpool-i11-e69e1131-1781457088.cycles.txt",
+    "cycles_svg": "cat3-33-maxpool-i11-e69e1131-1781457088.cycles.svg",
+    "funcmix": "cat3-33-maxpool-i11-e69e1131-1781457088.funcmix.txt",
+    "funcmix_svg": "cat3-33-maxpool-i11-e69e1131-1781457088.funcmix.svg",
+    "funccyc": "cat3-33-maxpool-i11-e69e1131-1781457088.funccyc.txt",
+    "funccyc_svg": "cat3-33-maxpool-i11-e69e1131-1781457088.funccyc.svg",
+    "funccalls": "cat3-33-maxpool-i11-e69e1131-1781457088.funccalls.txt",
+    "funccalls_svg": "cat3-33-maxpool-i11-e69e1131-1781457088.funccalls.svg",
+    "cost_svg": "cat3-33-maxpool-i11-e69e1131-1781457088.cost.svg",
+    "trace_cmp": "gem5_crc==host_crc"
+  },
+  "note": "int8 maxpool x11"
+}

@@ -1,0 +1,363 @@
+{
+  "schema": "avrxpu-run/1",
+  "run_id": "cat3-32-fc-i1-40175c01-1781457076",
+  "workload": {
+    "id": "32-fc",
+    "category": "cat3-inference",
+    "kernel": "int8 fully-connected GEMM (32->16) + requantize"
+  },
+  "kind": "measurement",
+  "created_utc": "2026-06-14T17:11:16Z",
+  "unixtime": 1781457076,
+  "platform": {
+    "runner": "navrobotec",
+    "gem5_git": "adac491a9e"
+  },
+  "build": {
+    "mcu": "atmega1284p",
+    "toolchain": "avr-gcc 7.3.0",
+    "cflags": "-O1 -ffp-contract=off -fno-fast-math",
+    "iters": 1,
+    "trace": false,
+    "elf": "fc_avr_i1.elf",
+    "elf_sha256": "40175c01fa717631ffceb09faaa6ab7ec2e402c44cdef9d45cfca1869017721a",
+    "elf_archived": "cat3-inference/32-fc/elf/40175c01fa71.elf"
+  },
+  "validation": {
+    "host_crc": "a59827b3",
+    "gem5_crc": "a59827b3",
+    "checkpoints": 0,
+    "match": true
+  },
+  "exit": {
+    "cause": "AVR Syscall Exit",
+    "ok": true
+  },
+  "metrics": {
+    "simInsts": 131653,
+    "simOps": 131653,
+    "numCycles": 176021,
+    "cpi": 1.337007,
+    "ipc": 0.747939,
+    "mem_insts": 5757,
+    "bytes_moved": 5757,
+    "compute_insts": 125896,
+    "insts_per_byte": 21.868
+  },
+  "opmix": {
+    "available": true,
+    "total": 131653,
+    "classes": {
+      "adc": 40257,
+      "brbc": 13022,
+      "cpc": 10696,
+      "cp": 9810,
+      "dec": 9513,
+      "brbs": 8899,
+      "movw": 3645,
+      "mov": 3005,
+      "add": 2737,
+      "sub": 2198,
+      "call": 2178,
+      "ret": 2177,
+      "sbc": 2158,
+      "ldd_y": 2104,
+      "eor": 2058,
+      "mul": 2048,
+      "com": 1498,
+      "subi": 1394,
+      "std_y": 1190,
+      "sbrc": 1136,
+      "sbci": 985,
+      "ldi": 911,
+      "cpi": 854,
+      "ror_inst": 848,
+      "st_x_postinc": 732,
+      "rjmp": 725,
+      "andi": 650,
+      "ld_x_postinc": 576,
+      "bst": 544,
+      "st_z_postinc": 544,
+      "ld_z_postinc": 537,
+      "and": 513,
+      "jmp": 513,
+      "sbrs": 512,
+      "lsr": 240,
+      "neg": 128,
+      "elpm_z_postinc": 28,
+      "push": 18,
+      "pop": 18,
+      "asr": 16,
+      "out_instr": 10,
+      "ldd_z": 9,
+      "cpse": 9,
+      "in_instr": 4,
+      "adiw": 2,
+      "bclr": 2,
+      "sbiw": 1,
+      "std_z": 1
+    }
+  },
+  "opmix_cycles": {
+    "available": true,
+    "total": 176002,
+    "classes": {
+      "adc": 40257,
+      "brbc": 25140,
+      "brbs": 17098,
+      "cpc": 10696,
+      "cp": 9810,
+      "dec": 9513,
+      "call": 8712,
+      "ret": 8708,
+      "ldd_y": 4208,
+      "mul": 4096,
+      "movw": 3645,
+      "mov": 3005,
+      "add": 2737,
+      "std_y": 2380,
+      "sbrc": 2250,
+      "sub": 2198,
+      "sbc": 2158,
+      "eor": 2058,
+      "jmp": 1539,
+      "com": 1498,
+      "st_x_postinc": 1464,
+      "rjmp": 1450,
+      "subi": 1394,
+      "ld_x_postinc": 1152,
+      "st_z_postinc": 1088,
+      "ld_z_postinc": 1074,
+      "sbci": 985,
+      "ldi": 911,
+      "cpi": 854,
+      "ror_inst": 848,
+      "sbrs": 832,
+      "andi": 650,
+      "bst": 544,
+      "and": 513,
+      "lsr": 240,
+      "neg": 128,
+      "push": 36,
+      "pop": 36,
+      "elpm_z_postinc": 28,
+      "ldd_z": 18,
+      "asr": 16,
+      "cpse": 11,
+      "out_instr": 10,
+      "in_instr": 4,
+      "adiw": 4,
+      "sbiw": 2,
+      "std_z": 2,
+      "bclr": 2
+    }
+  },
+  "funcmix": {
+    "available": true,
+    "total": 131653,
+    "classes": {
+      "__udivmodhi4_loop": 44600,
+      "__udivmodhi4_ep": 39712,
+      "run_workload": 22036,
+      "__umulhisi3": 7680,
+      "_div": 3808,
+      "__mulhisi3": 2548,
+      "__udivmodhi4": 2176,
+      ".do_clear_bss_start": 1876,
+      "__usmulhisi3_tail": 1664,
+      "__ashldi3": 1648,
+      "__lshrdi3": 1264,
+      "main": 908,
+      ".do_clear_bss_loop": 624,
+      "__divmodhi4_exit": 544,
+      "__cmpdi2_s8": 368,
+      "__do_copy_data": 151,
+      "__ashrdi3": 22,
+      "__USER_SIGNATURE_REGION_LENGTH__": 13,
+      "__ctors_end": 6,
+      "__do_clear_bss": 4,
+      "__heap_end": 1
+    }
+  },
+  "funcmix_cycles": {
+    "available": true,
+    "total": 176002,
+    "classes": {
+      "__udivmodhi4_loop": 52764,
+      "__udivmodhi4_ep": 50048,
+      "run_workload": 31667,
+      "__umulhisi3": 11264,
+      "_div": 7616,
+      "__mulhisi3": 5370,
+      "__usmulhisi3_tail": 3520,
+      "__udivmodhi4": 2720,
+      ".do_clear_bss_start": 2503,
+      "__divmodhi4_exit": 2176,
+      "__ashldi3": 1856,
+      "__lshrdi3": 1424,
+      ".do_clear_bss_loop": 1248,
+      "main": 1064,
+      "__cmpdi2_s8": 480,
+      "__do_copy_data": 208,
+      "__ashrdi3": 32,
+      "__USER_SIGNATURE_REGION_LENGTH__": 28,
+      "__ctors_end": 6,
+      "__do_clear_bss": 5,
+      "__heap_end": 3
+    }
+  },
+  "funccalls": {
+    "available": true,
+    "total": 22456,
+    "classes": {
+      "__udivmodhi4_ep": 9248,
+      "__udivmodhi4_loop": 8704,
+      ".do_clear_bss_start": 625,
+      ".do_clear_bss_loop": 624,
+      "__divmodhi4_exit": 544,
+      "__udivmodhi4": 544,
+      "_div": 544,
+      "__mulhisi3": 512,
+      "__umulhisi3": 512,
+      "__usmulhisi3_tail": 512,
+      "__cmpdi2_s8": 32,
+      "__ashldi3": 16,
+      "__lshrdi3": 16,
+      "__ashrdi3": 16,
+      "__ctors_end": 1,
+      "__do_copy_data": 1,
+      "__heap_end": 1,
+      "run_workload": 1,
+      "__do_clear_bss": 1,
+      "main": 1,
+      "__USER_SIGNATURE_REGION_LENGTH__": 1
+    }
+  },
+  "runtime_cost": {
+    "available": true,
+    "total_cycles": 176002,
+    "by_function": {
+      "__udivmodhi4_loop": {
+        "cost_cycles": 52764,
+        "calls": 8704,
+        "cyc_per_call": 6.06
+      },
+      "__udivmodhi4_ep": {
+        "cost_cycles": 50048,
+        "calls": 9248,
+        "cyc_per_call": 5.41
+      },
+      "run_workload": {
+        "cost_cycles": 31667,
+        "calls": 1,
+        "cyc_per_call": 31667.0
+      },
+      "__umulhisi3": {
+        "cost_cycles": 11264,
+        "calls": 512,
+        "cyc_per_call": 22.0
+      },
+      "_div": {
+        "cost_cycles": 7616,
+        "calls": 544,
+        "cyc_per_call": 14.0
+      },
+      "__mulhisi3": {
+        "cost_cycles": 5370,
+        "calls": 512,
+        "cyc_per_call": 10.49
+      },
+      "__usmulhisi3_tail": {
+        "cost_cycles": 3520,
+        "calls": 512,
+        "cyc_per_call": 6.88
+      },
+      "__udivmodhi4": {
+        "cost_cycles": 2720,
+        "calls": 544,
+        "cyc_per_call": 5.0
+      },
+      ".do_clear_bss_start": {
+        "cost_cycles": 2503,
+        "calls": 625,
+        "cyc_per_call": 4.0
+      },
+      "__divmodhi4_exit": {
+        "cost_cycles": 2176,
+        "calls": 544,
+        "cyc_per_call": 4.0
+      },
+      "__ashldi3": {
+        "cost_cycles": 1856,
+        "calls": 16,
+        "cyc_per_call": 116.0
+      },
+      "__lshrdi3": {
+        "cost_cycles": 1424,
+        "calls": 16,
+        "cyc_per_call": 89.0
+      },
+      ".do_clear_bss_loop": {
+        "cost_cycles": 1248,
+        "calls": 624,
+        "cyc_per_call": 2.0
+      },
+      "main": {
+        "cost_cycles": 1064,
+        "calls": 1,
+        "cyc_per_call": 1064.0
+      },
+      "__cmpdi2_s8": {
+        "cost_cycles": 480,
+        "calls": 32,
+        "cyc_per_call": 15.0
+      },
+      "__do_copy_data": {
+        "cost_cycles": 208,
+        "calls": 1,
+        "cyc_per_call": 208.0
+      },
+      "__ashrdi3": {
+        "cost_cycles": 32,
+        "calls": 16,
+        "cyc_per_call": 2.0
+      },
+      "__USER_SIGNATURE_REGION_LENGTH__": {
+        "cost_cycles": 28,
+        "calls": 1,
+        "cyc_per_call": 28.0
+      },
+      "__ctors_end": {
+        "cost_cycles": 6,
+        "calls": 1,
+        "cyc_per_call": 6.0
+      },
+      "__do_clear_bss": {
+        "cost_cycles": 5,
+        "calls": 1,
+        "cyc_per_call": 5.0
+      },
+      "__heap_end": {
+        "cost_cycles": 3,
+        "calls": 1,
+        "cyc_per_call": 3.0
+      }
+    }
+  },
+  "raw": {
+    "stats": "cat3-32-fc-i1-40175c01-1781457076.stats.txt",
+    "opmix": "cat3-32-fc-i1-40175c01-1781457076.opmix.txt",
+    "opmix_svg": "cat3-32-fc-i1-40175c01-1781457076.opmix.svg",
+    "cycles": "cat3-32-fc-i1-40175c01-1781457076.cycles.txt",
+    "cycles_svg": "cat3-32-fc-i1-40175c01-1781457076.cycles.svg",
+    "funcmix": "cat3-32-fc-i1-40175c01-1781457076.funcmix.txt",
+    "funcmix_svg": "cat3-32-fc-i1-40175c01-1781457076.funcmix.svg",
+    "funccyc": "cat3-32-fc-i1-40175c01-1781457076.funccyc.txt",
+    "funccyc_svg": "cat3-32-fc-i1-40175c01-1781457076.funccyc.svg",
+    "funccalls": "cat3-32-fc-i1-40175c01-1781457076.funccalls.txt",
+    "funccalls_svg": "cat3-32-fc-i1-40175c01-1781457076.funccalls.svg",
+    "cost_svg": "cat3-32-fc-i1-40175c01-1781457076.cost.svg",
+    "trace_cmp": "gem5_crc==host_crc"
+  },
+  "note": "int8 FC/GEMM x1"
+}
